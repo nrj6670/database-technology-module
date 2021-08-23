@@ -1,0 +1,265 @@
+1) Display all records in EMP table those were joined before SCOTT joined?
+
+solution:-
+
+mysql> SELECT * FROM emp WHERE HIREDATE > (SELECT HIREDATE FROM emp WHERE ENAME = 'SCOTT');
++-------+-------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+-------+------+------------+------+------+--------+
+|  7876 | ADAMS | CLERK | 7788 | 1983-01-12 | 1100 | NULL |     20 |
++-------+-------+-------+------+------------+------+------+--------+
+1 row in set (0.12 sec)
+
+2) Display details of department where department has 3 employees?
+
+solution:-
+
+mysql> SELECT * FROM dept WHERE (DEPTNO) IN (SELECT DEPTNO FROM emp GROUP BY DEPTNO HAVING COUNT(*)=3);
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
++--------+------------+----------+
+1 row in set (0.11 sec)
+
+
+3) Display details of department with Minimum salary and maximum salary?
+
+solution:-
+
+mysql> SELECT * FROM dept WHERE DEPTNO=ANY(
+     SELECT DEPTNO FROM emp WHERE SAL=(SELECT  MAX(SAL) FROM emp)
+     UNION
+     SELECT DEPTNO FROM emp WHERE SAL=(SELECT  MIN(SAL) FROM emp)
+     );
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
++--------+------------+----------+
+2 rows in set (0.00 sec)
+
+4) Display all ename, sal, deptno,dname from emp, dept table where all department which has employees as well as department does not have any employees. This query should include non matching rows.
+
+solution:-
+
+mysql> SELECT emp.ENAME, emp.SAL, dept.DEPTNO, dept.DNAME FROM emp RIGHT JOIN dept ON emp.DEPTNO=dept.DEPTNO;
++--------+------+--------+------------+
+| ENAME  | SAL  | DEPTNO | DNAME      |
++--------+------+--------+------------+
+| CLARK  | 2450 |     10 | ACCOUNTING |
+| KING   | 5000 |     10 | ACCOUNTING |
+| MILLER | 1300 |     10 | ACCOUNTING |
+| SMITH  |  800 |     20 | RESEARCH   |
+| JONES  | 2975 |     20 | RESEARCH   |
+| SCOTT  | 3000 |     20 | RESEARCH   |
+| ADAMS  | 1100 |     20 | RESEARCH   |
+| FORD   | 3000 |     20 | RESEARCH   |
+| ALLEN  | 1600 |     30 | SALES      |
+| WARD   | 1250 |     30 | SALES      |
+| MARTIN | 1250 |     30 | SALES      |
+| BLAKE  | 2850 |     30 | SALES      |
+| TURNER | 1500 |     30 | SALES      |
+| JAMES  |  950 |     30 | SALES      |
+| NULL   | NULL |     40 | OPERATIONS |
++--------+------+--------+------------+
+15 rows in set (0.11 sec)
+
+5) Display all ename, sal, deptno from emp, dept table where all employees which has matching department as well as employee does not have any departments. This query should include non matching rows.
+
+solution:-
+
+mysql> SELECT emp.ENAME, emp.SAL, emp.DEPTNO, dept.DEPTNO FROM emp LEFT JOIN dept ON emp.DEPTNO=dept.DEPTNO;
++--------+------+--------+--------+
+| ENAME  | SAL  | DEPTNO | DEPTNO |
++--------+------+--------+--------+
+| SMITH  |  800 |     20 |     20 |
+| ALLEN  | 1600 |     30 |     30 |
+| WARD   | 1250 |     30 |     30 |
+| JONES  | 2975 |     20 |     20 |
+| MARTIN | 1250 |     30 |     30 |
+| BLAKE  | 2850 |     30 |     30 |
+| CLARK  | 2450 |     10 |     10 |
+| SCOTT  | 3000 |     20 |     20 |
+| KING   | 5000 |     10 |     10 |
+| TURNER | 1500 |     30 |     30 |
+| ADAMS  | 1100 |     20 |     20 |
+| JAMES  |  950 |     30 |     30 |
+| FORD   | 3000 |     20 |     20 |
+| MILLER | 1300 |     10 |     10 |
++--------+------+--------+--------+
+14 rows in set (0.00 sec)
+
+6) Display all ename, sal, dname. Result must include all employees as well as all departments. This query should include non matching rows on both the tables.
+
+solution:-
+
+mysql> SELECT emp.ENAME, emp.SAL, dept.DNAME FROM emp LEFT JOIN dept ON emp.DEPTNO=dept.DEPTNO
+    -> UNION
+    -> SELECT emp.ENAME, emp.SAL, dept.DNAME FROM emp RIGHT JOIN dept ON emp.DEPTNO=dept.DEPTNO;
++--------+------+------------+
+| ENAME  | SAL  | DNAME      |
++--------+------+------------+
+| SMITH  |  800 | RESEARCH   |
+| ALLEN  | 1600 | SALES      |
+| WARD   | 1250 | SALES      |
+| JONES  | 2975 | RESEARCH   |
+| MARTIN | 1250 | SALES      |
+| BLAKE  | 2850 | SALES      |
+| CLARK  | 2450 | ACCOUNTING |
+| SCOTT  | 3000 | RESEARCH   |
+| KING   | 5000 | ACCOUNTING |
+| TURNER | 1500 | SALES      |
+| ADAMS  | 1100 | RESEARCH   |
+| JAMES  |  950 | SALES      |
+| FORD   | 3000 | RESEARCH   |
+| MILLER | 1300 | ACCOUNTING |
+| NULL   | NULL | OPERATIONS |
++--------+------+------------+
+15 rows in set (0.00 sec)
+
+7) Display all ename, empno, dname from emp, dept table without joining two tables
+
+solution:-
+
+mysql> SELECT DISTINCT emp.EMPNO, emp.ENAME, dept.DNAME FROM (emp,dept);
++-------+--------+------------+
+| EMPNO | ENAME  | DNAME      |
++-------+--------+------------+
+|  7369 | SMITH  | ACCOUNTING |
+|  7369 | SMITH  | RESEARCH   |
+|  7369 | SMITH  | SALES      |
+|  7369 | SMITH  | OPERATIONS |
+|  7499 | ALLEN  | ACCOUNTING |
+|  7499 | ALLEN  | RESEARCH   |
+|  7499 | ALLEN  | SALES      |
+|  7499 | ALLEN  | OPERATIONS |
+|  7521 | WARD   | ACCOUNTING |
+|  7521 | WARD   | RESEARCH   |
+|  7521 | WARD   | SALES      |
+|  7521 | WARD   | OPERATIONS |
+|  7566 | JONES  | ACCOUNTING |
+|  7566 | JONES  | RESEARCH   |
+|  7566 | JONES  | SALES      |
+|  7566 | JONES  | OPERATIONS |
+|  7654 | MARTIN | ACCOUNTING |
+|  7654 | MARTIN | RESEARCH   |
+|  7654 | MARTIN | SALES      |
+.........
+.......
+....
+
+8) Display all the departments where department does not have any employees
+
+solution:-
+
+mysql> SELECT dept.DNAME AS 'DEPT WITH NO EMPLOYEE' FROM dept WHERE DEPTNO<>ALL(SELECT emp.DEPTNO FROM emp GROUP BY emp.DEPTNO);
++-----------------------+
+| DEPT WITH NO EMPLOYEE |
++-----------------------+
+| OPERATIONS            |
++-----------------------+
+1 row in set (0.00 sec)
+
+9) Display all the departments where department does have atleast one employee
+
+solution:-
+
+mysql> SELECT dept.DNAME AS 'DEPT WITH NO EMPLOYEE' FROM dept WHERE DEPTNO=ANY(SELECT emp.DEPTNO FROM emp GROUP BY emp.DEPTNO);
++-----------------------+
+| DEPT WITH NO EMPLOYEE |
++-----------------------+
+| ACCOUNTING            |
+| RESEARCH              |
+| SALES                 |
++-----------------------+
+3 rows in set (0.10 sec)
+
+10) Display all employees those who are not managers?
+
+solution:-
+
+mysql> SELECT * FROM emp WHERE JOB<>'MANAGER';
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+11 rows in set (0.00 sec)
+
+11) Display all the records for deptno which belongs to employee name JAMES?
+
+solution:-
+
+mysql> SELECT * FROM dept WHERE DEPTNO=ANY(SELECT DEPTNO FROM emp WHERE ENAME='JAMES');
++--------+-------+---------+
+| DEPTNO | DNAME | LOC     |
++--------+-------+---------+
+|     30 | SALES | CHICAGO |
++--------+-------+---------+
+1 row in set (0.00 sec)
+
+12) Display all the records in emp table where salary should be less then or equal to ADAMS salary?
+
+solution:-
+
+mysql> SELECT * FROM emp WHERE ENAME<>'ADAMS' AND (SAL<(SELECT SAL FROM emp WHERE ENAME='ADAMS') OR SAL=(SELECT SAL FROM emp WHERE ENAME='ADAMS'));
++-------+-------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+-------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7900 | JAMES | CLERK | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+-------+-------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+13) Display ename, sal, grade, dname, loc for each employee.
+
+solution:-
+
+mysql> SELECT emp.ENAME,emp.SAL,salgrade.GRADE,dept.DNAME,dept.LOC FROM emp LEFT JOIN dept ON emp.DEPTNO=dept.DEPTNO LEFT JOIN salgrade ON (emp.SAL BETWEEN salgrade.LOSAL AND salgrade.HISAL);
++--------+------+-------+------------+----------+
+| ENAME  | SAL  | GRADE | DNAME      | LOC      |
++--------+------+-------+------------+----------+
+| SMITH  |  800 |     1 | RESEARCH   | DALLAS   |
+| ALLEN  | 1600 |     3 | SALES      | CHICAGO  |
+| WARD   | 1250 |     2 | SALES      | CHICAGO  |
+| JONES  | 2975 |     4 | RESEARCH   | DALLAS   |
+| MARTIN | 1250 |     2 | SALES      | CHICAGO  |
+| BLAKE  | 2850 |     4 | SALES      | CHICAGO  |
+| CLARK  | 2450 |     4 | ACCOUNTING | NEW YORK |
+| SCOTT  | 3000 |     4 | RESEARCH   | DALLAS   |
+| KING   | 5000 |     5 | ACCOUNTING | NEW YORK |
+| TURNER | 1500 |     3 | SALES      | CHICAGO  |
+| ADAMS  | 1100 |     1 | RESEARCH   | DALLAS   |
+| JAMES  |  950 |     1 | SALES      | CHICAGO  |
+| FORD   | 3000 |     4 | RESEARCH   | DALLAS   |
+| MILLER | 1300 |     2 | ACCOUNTING | NEW YORK |
++--------+------+-------+------------+----------+
+14 rows in set (0.00 sec)
+
+14) Display all employee whose location is DALLAS?
+
+solution:-
+
+mysql> SELECT * FROM emp WHERE DEPTNO=(SELECT DEPTNO FROM dept WHERE LOC='DALLAS');
++-------+-------+---------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+---------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK   | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES | MANAGER | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | SCOTT | ANALYST | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7876 | ADAMS | CLERK   | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD  | ANALYST | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+-------+---------+------+------------+------+------+--------+
+5 rows in set (0.00 sec)

@@ -1,0 +1,392 @@
+
+----------------------------------------Questions on SELECT Clause----------------------------------------
+
+
+1. Display all the records in emp table.
+
+solution:-
+mysql> select * from emp;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+
+2. Display first two column from emp table.
+
+solution :-
+
+mysql> select EMPNO,ENAME from emp;
++-------+--------+
+| EMPNO | ENAME  |
++-------+--------+
+|  7369 | SMITH  |
+|  7499 | ALLEN  |
+|  7521 | WARD   |
+|  7566 | JONES  |
+|  7654 | MARTIN |
+|  7698 | BLAKE  |
+|  7782 | CLARK  |
+|  7788 | SCOTT  |
+|  7839 | KING   |
+|  7844 | TURNER |
+|  7876 | ADAMS  |
+|  7900 | JAMES  |
+|  7902 | FORD   |
+|  7934 | MILLER |
++-------+--------+
+
+3. Display the structure of emp, dept and salgrade table.
+
+solution :-
+
+mysql> desc emp;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| EMPNO    | int unsigned | NO   |     | NULL    |       |
+| ENAME    | varchar(10)  | YES  |     | NULL    |       |
+| JOB      | varchar(9)   | YES  |     | NULL    |       |
+| MGR      | int unsigned | YES  |     | NULL    |       |
+| HIREDATE | date         | YES  |     | NULL    |       |
+| SAL      | float        | YES  |     | NULL    |       |
+| COMM     | float        | YES  |     | NULL    |       |
+| DEPTNO   | int unsigned | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+8 rows in set (0.08 sec)
+
+mysql> desc dept;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| DEPTNO | int unsigned | YES  |     | NULL    |       |
+| DNAME  | varchar(14)  | YES  |     | NULL    |       |
+| LOC    | varchar(13)  | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc salgrade;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| GRADE | int  | YES  |     | NULL    |       |
+| LOSAL | int  | YES  |     | NULL    |       |
+| HISAL | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+4. Display unique jobs from employee table.
+
+solution :-
+
+mysql> select distinct job from emp;
++-----------+
+| job       |
++-----------+
+| CLERK     |
+| SALESMAN  |
+| MANAGER   |
+| ANALYST   |
+| PRESIDENT |
++-----------+
+5 rows in set (0.10 sec)
+
+
+5. Display the output as follows 
+          SCOTT is earning 800 dollars
+          ...
+
+solution :-
+
+mysql> select concat(ENAME, ' is earning ', SAL) from emp;
++------------------------------------+
+| concat(ENAME, ' is earning ', SAL) |
++------------------------------------+
+| SMITH is earning 800               |
+| ALLEN is earning 1600              |
+| WARD is earning 1250               |
+| JONES is earning 2975              |
+| MARTIN is earning 1250             |
+| BLAKE is earning 2850              |
+| CLARK is earning 2450              |
+| SCOTT is earning 3000              |
+| KING is earning 5000               |
+| TURNER is earning 1500             |
+| ADAMS is earning 1100              |
+| JAMES is earning 950               |
+| FORD is earning 3000               |
+| MILLER is earning 1300             |
++------------------------------------+
+14 rows in set (0.10 sec)
+
+6. Display the output from employee table in following format.
+
+ Employee Name  Designation 
+-----------------------   ---------------------
+ SMITH                 CLERK
+ ALLEN                 SALESMAN
+...
+
+solution:-
+
+mysql> select ENAME AS 'Employee Name', JOB AS 'Designation' from emp;
++---------------+-------------+
+| Employee Name | Designation |
++---------------+-------------+
+| SMITH         | CLERK       |
+| ALLEN         | SALESMAN    |
+| WARD          | SALESMAN    |
+| JONES         | MANAGER     |
+| MARTIN        | SALESMAN    |
+| BLAKE         | MANAGER     |
+| CLARK         | MANAGER     |
+| SCOTT         | ANALYST     |
+| KING          | PRESIDENT   |
+| TURNER        | SALESMAN    |
+| ADAMS         | CLERK       |
+| JAMES         | CLERK       |
+| FORD          | ANALYST     |
+| MILLER        | CLERK       |
++---------------+-------------+
+14 rows in set (0.00 sec)
+
+
+7. Display the name of employee and annual salary of each employee. Annual sal must
+ be calculated by considering sal, comm and bonus of 1000$ for each employee.
+
+
+solution :-
+
+mysql> select ENAME AS 'Employee Name', SAL + IFNULL(COMM, 0) + 1000 AS 'Annual Salary' from emp;
++---------------+---------------+
+| Employee Name | Annual Salary |
++---------------+---------------+
+| SMITH         |          1800 |
+| ALLEN         |          2900 |
+| WARD          |          2750 |
+| JONES         |          3975 |
+| MARTIN        |          3650 |
+| BLAKE         |          3850 |
+| CLARK         |          3450 |
+| SCOTT         |          4000 |
+| KING          |          6000 |
+| TURNER        |          2500 |
+| ADAMS         |          2100 |
+| JAMES         |          1950 |
+| FORD          |          4000 |
+| MILLER        |          2300 |
++---------------+---------------+
+14 rows in set (0.00 sec)
+
+8. Display the list of manager's employee number in following format. 
+Ensure that same manager number must not be repeated. Also ensure that NULL must not be
+displayed in the result (display NA in place of null).
+
+solution:-
+
+mysql> select distinct IFNULL(MGR, 'NA') AS 'Manager Number' from emp;
++----------------+
+| Manager Number |
++----------------+
+| 7902           |
+| 7698           |
+| 7839           |
+| 7566           |
+| NA             |
+| 7788           |
+| 7782           |
++----------------+
+7 rows in set (0.00 sec)
+
+9. Display the employee name, salary and commission and ensure that we consider the commission 
+as 1500 for employees where commission is not paid.
+
+solution :-
+
+mysql> select ENAME as 'Employee Name', SAL as 'Salary', IFNULL(COMM,1500) as Commision from emp;
++---------------+--------+-----------+
+| Employee Name | Salary | Commision |
++---------------+--------+-----------+
+| SMITH         |    800 |      1500 |
+| ALLEN         |   1600 |       300 |
+| WARD          |   1250 |       500 |
+| JONES         |   2975 |      1500 |
+| MARTIN        |   1250 |      1400 |
+| BLAKE         |   2850 |      1500 |
+| CLARK         |   2450 |      1500 |
+| SCOTT         |   3000 |      1500 |
+| KING          |   5000 |      1500 |
+| TURNER        |   1500 |         0 |
+| ADAMS         |   1100 |      1500 |
+| JAMES         |    950 |      1500 |
+| FORD          |   3000 |      1500 |
+| MILLER        |   1300 |      1500 |
++---------------+--------+-----------+
+14 rows in set (0.00 sec)
+
+-----------------------------QUESTIONS ON WHERE CLAUSE-----------------------------------
+
+1. List the employees who are working in department 10.
+
+solution :-
+
+mysql> select ENAME as 'Employee from department 10' from emp where DEPTNO=10;
++-----------------------------+
+| Employee from department 10 |
++-----------------------------+
+| CLARK                       |
+| KING                        |
+| MILLER                      |
++-----------------------------+
+3 rows in set (0.00 sec)
+
+
+2. List the name and salary of employees who are working as CLERK and SALESMAN.
+
+solution :-
+
+mysql> select ENAME, SAL from emp where JOB='CLERK' OR JOB='SALESMAN' order by JOB;
++--------+------+
+| ENAME  | SAL  |
++--------+------+
+| SMITH  |  800 |
+| ADAMS  | 1100 |
+| JAMES  |  950 |
+| MILLER | 1300 |
+| ALLEN  | 1600 |
+| WARD   | 1250 |
+| MARTIN | 1250 |
+| TURNER | 1500 |
++--------+------+
+8 rows in set (0.00 sec)
+
+3. List the name of employees who have joined the company after year 1981.
+
+solution :-
+
+mysql> select ENAME from emp where HIREDATE>'1981-12-31';
++--------+
+| ENAME  |
++--------+
+| SCOTT  |
+| ADAMS  |
+| MILLER |
++--------+
+
+4. List the name of employees who have joined the company in year 1981.
+
+solution :-
+
+mysql> select ENAME from emp where HIREDATE>'1980-12-31' and HIREDATE<'1982-01-01';
++--------+
+| ENAME  |
++--------+
+| ALLEN  |
+| WARD   |
+| JONES  |
+| MARTIN |
+| BLAKE  |
+| CLARK  |
+| KING   |
+| TURNER |
+| JAMES  |
+| FORD   |
++--------+
+
+5. List the details of employees who are working as CLERK and earning more then 1000$.
+
+solution:-
+
+mysql> select * from emp where JOB='CLERK' AND SAL>1000;
++-------+--------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-------+------+------------+------+------+--------+
+|  7876 | ADAMS  | CLERK | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7934 | MILLER | CLERK | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+6. List the details of employees who are not managed by any manager.
+
+solution :-
+
+mysql> select * from emp where MGR is NULL;
++-------+-------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+-----------+------+------------+------+------+--------+
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
++-------+-------+-----------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+7. List the name of employees who are not earning any commission.
+
+solution:-
+
+
+8. List the details of employees whose total salary (sal and commission) is more then $2000.
+
+solution:-
+
+mysql> select ENAME from emp where COMM is NULL or COMM=0;
++--------+
+| ENAME  |
++--------+
+| SMITH  |
+| JONES  |
+| BLAKE  |
+| CLARK  |
+| SCOTT  |
+| KING   |
+| TURNER |
+| ADAMS  |
+| JAMES  |
+| FORD   |
+| MILLER |
++--------+
+11 rows in set (0.00 sec)
+
+
+9. List the details of employees which are working as SALESMAN in department 10 and 30.
+
+solution:-
+
+mysql> select * from emp where JOB='SALESMAN' and (DEPTNO=10 OR DEPTNO=30);
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+10. List details of employees who are working as SALESMAN in department 30 and earning some 
+commission.
+
+solution :-
+
+mysql> select * from emp where JOB='SALESMAN' and DEPTNO=30 and  COMM > 0;
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+3 rows in set (0.00 sec)
+
+---------------------------------

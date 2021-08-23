@@ -1,0 +1,146 @@
+				Part- B
+1- Insert Array of document in inventory database
+{
+item: "ABC2",
+details: { model: "14Q3", manufacturer: "M1 Corporation" },
+stock: [ { size: "M", qty: 50 } ],
+category: "clothing"
+},
+{
+item: "MNO2",
+details: { model: "14Q3", manufacturer: "ABC Company" },
+stock: [ { size: "S", qty: 5 }, { size: "M", qty: 5 }, { size: "L", qty: 1 } ],
+category: "clothing"
+},
+{
+item: "IJK2", d
+details: { model: "14Q2", manufacturer: "M5 Corporation" },
+stock: [ { size: "S", qty: 5 }, { size: "L", qty: 1 } ],
+category: "houseware"
+}
+
+ANSWER:-
+
+	use inventory;
+	db.createCollection("inventory");
+	db.inventory.insertMany(
+	[
+		{
+			item: "ABC2",
+			details: { model: "14Q3", manufacturer: "M1 Corporation" },
+			stock: [ { size: "M", qty: 50 } ],
+			category: "clothing"
+		},
+		{
+			item: "MNO2",
+			details: { model: "14Q3", manufacturer: "ABC Company" },
+			stock: [ { size: "S", qty: 5 }, { size: "M", qty: 5 }, { size: "L", qty: 1 } ],
+			category: "clothing"
+		},
+		{
+			item: "IJK2",
+			details: { model: "14Q2", manufacturer: "M5 Corporation" },
+			stock: [ { size: "S", qty: 5 }, { size: "L", qty: 1 } ],
+			category: "houseware"
+		}
+	]);
+
+
+2- Find informtion about items and details from inventory collection where category is houseware
+
+ANSWER:-
+
+	db.inventory.find({category: "houseware"}, {stock: 0, category: 0}).pretty();
+	{
+  	      "_id" : ObjectId("61025dce546b25de618e3cc1"),
+   	      "item" : "IJK2",
+	      "details" : {
+                "model" : "14Q2",
+                "manufacturer" : "M5 Corporation"
+       	      }
+	}
+
+
+3- Increment the quantity by 10, for item_id "IJK2"
+
+ANSWER:-
+	 db.inventory.updateOne({item:"IJK2"}, {$inc: {"stock.$[].qty": 10}});
+	 { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+	 db.inventory.find({item: "IJK2"}).pretty();
+	{
+        	"_id" : ObjectId("61025dce546b25de618e3cc1"),
+        	"item" : "IJK2",
+       		"details" : {
+                "model" : "14Q2",
+                "manufacturer" : "M5 Corporation"
+      		 },
+        	"stock" : [
+                	{
+                        	"size" : "S",
+                        	"qty" : 15
+                	},
+                	{
+                        	"size" : "L",
+                        	"qty" : 11
+                	}
+        		],
+       		 "category" : "houseware"
+	}
+
+	
+4-Remove the category field from the document where item: "ABC2",
+
+ANSWER:-
+
+	db.inventory.update({item: "ABC2"}, {$unset: {category: ""}});
+	WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+	db.inventory.find({item: "ABC2"}).pretty();
+	{
+        	"_id" : ObjectId("61025dce546b25de618e3cbf"),
+       		"item" : "ABC2",
+        	"details" : {
+                	"model" : "14Q3",
+                	"manufacturer" : "M1 Corporation"
+        	},
+        	"stock" : [
+                	{
+                        	"size" : "M",
+                        	"qty" : 50
+                	}
+        	]
+	}
+
+
+5-Update the name of model from "14Q3" to "14P3" for item_id MNO2
+
+ANSWER:-
+
+	db.inventory.update({item: "MNO2"}, {$set: {"details.model": "14P3"}});
+	WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+	db.inventory.find({item: "MNO2"}).pretty();
+	{
+        	"_id" : ObjectId("61025dce546b25de618e3cc0"),
+       		 "item" : "MNO2",
+       		 "details" : {
+                	"model" : "14P3",
+                	"manufacturer" : "ABC Company"
+        	},
+        	"stock" : [
+                	{
+                        	"size" : "S",
+                        	"qty" : 5
+                	},
+                	{
+                        	"size" : "M",
+                        	"qty" : 5
+                	},
+                	{
+                        	"size" : "L",
+                        	"qty" : 1
+                	}
+        	],
+       		"category" : "clothing"
+	}

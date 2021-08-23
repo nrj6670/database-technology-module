@@ -1,0 +1,957 @@
+1.) Write a query in SQL to display the first name, last name, department number, and department name for each employee.
+
+SOLUTION:-
+
+mysql> SELECT FIRST_NAME,LAST_NAME,EMPLOYEES.DEPARTMENT_ID,DEPARTMENTS.DEPARTMENT_NAME FROM EMPLOYEES LEFT JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID;
++-------------+-------------+---------------+------------------+
+| FIRST_NAME  | LAST_NAME   | DEPARTMENT_ID | DEPARTMENT_NAME  |
++-------------+-------------+---------------+------------------+
+| Steven      | King        |            90 | Executive        |
+| Neena       | Kochhar     |            90 | Executive        |
+| Lex         | De Haan     |            90 | Executive        |
+| Alexander   | Hunold      |            60 | IT               |
+| Bruce       | Ernst       |            60 | IT               |
+| David       | Austin      |            60 | IT               |
+| Valli       | Pataballa   |            60 | IT               |
+| Diana       | Lorentz     |            60 | IT               |
+| Nancy       | Greenberg   |           100 | Finance          |
+| Daniel      | Faviet      |           100 | Finance          |
+| John        | Chen        |           100 | Finance          |
+| Ismael      | Sciarra     |           100 | Finance          |
+| Jose Manuel | Urman       |           100 | Finance          |
+| Luis        | Popp        |           100 | Finance          |
+| Den         | Raphaely    |            30 | Purchasing       |
+| Alexander   | Khoo        |            30 | Purchasing       |
+| Shelli      | Baida       |            30 | Purchasing       |
+......
+...
+..
++-------------+-------------+---------------+------------------+
+107 rows in set (0.00 sec)
+
+
+2.) Write a query in SQL to display the first and last name, department, city, and state province for each employee
+
+SOLUTION:-
+
+mysql> SELECT FIRST_NAME,LAST_NAME,TEMP.DEPARTMENT_NAME,TEMP.CITY,TEMP.STATE_PROVINCE FROM EMPLOYEES LEFT JOIN (SELECT DEPARTMENT_ID,DEPARTMENT_NAME,LOCATIONS.CITY,LOCATIONS.STATE_PROVINCE FROM DEPARTMENTS LEFT JOIN LOCATIONS ON DEPARTMENTS.LOCATION_ID=LOCATIONS.LOCATION_ID) TEMP ON EMPLOYEES.DEPARTMENT_ID=TEMP.DEPARTMENT_ID;
++-------------+-------------+------------------+---------------------+----------------+
+| FIRST_NAME  | LAST_NAME   | DEPARTMENT_NAME  | CITY                | STATE_PROVINCE |
++-------------+-------------+------------------+---------------------+----------------+
+| Steven      | King        | Executive        | Seattle             | Washington     |
+| Neena       | Kochhar     | Executive        | Seattle             | Washington     |
+| Lex         | De Haan     | Executive        | Seattle             | Washington     |
+| Alexander   | Hunold      | IT               | Southlake           | Texas          |
+| Bruce       | Ernst       | IT               | Southlake           | Texas          |
+| David       | Austin      | IT               | Southlake           | Texas          |
+| Valli       | Pataballa   | IT               | Southlake           | Texas          |
+| Diana       | Lorentz     | IT               | Southlake           | Texas          |
+| Nancy       | Greenberg   | Finance          | Seattle             | Washington     |
+| Daniel      | Faviet      | Finance          | Seattle             | Washington     |
+| John        | Chen        | Finance          | Seattle             | Washington     |
+| Ismael      | Sciarra     | Finance          | Seattle             | Washington     |
+.....
+...
+..
++-------------+-------------+------------------+---------------------+----------------+
+107 rows in set (0.00 sec)
+
+3.) Write a query in SQL to display the first name, last name, salary, and job grade for all employees.
+
+SOLUTION:-
+
+
+
+4.) Write a query in SQL to display the first name, last name, department number and department name, for all employees for departments 80 or 40.
+
+SOLUTION:-
+
+mysql> SELECT FIRST_NAME,LAST_NAME,EMPLOYEES.DEPARTMENT_ID,DEPARTMENTS.DEPARTMENT_NAME FROM EMPLOYEES LEFT JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID WHERE (EMPLOYEES.DEPARTMENT_ID=40 OR EMPLOYEES.DEPARTMENT_ID=80);
++-------------+------------+---------------+-----------------+
+| FIRST_NAME  | LAST_NAME  | DEPARTMENT_ID | DEPARTMENT_NAME |
++-------------+------------+---------------+-----------------+
+| Susan       | Mavris     |            40 | Human Resources |
+| John        | Russell    |            80 | Sales           |
+| Karen       | Partners   |            80 | Sales           |
+| Alberto     | Errazuriz  |            80 | Sales           |
+| Gerald      | Cambrault  |            80 | Sales           |
+| Eleni       | Zlotkey    |            80 | Sales           |
+| Peter       | Tucker     |            80 | Sales           |
+| David       | Bernstein  |            80 | Sales           |
+| Peter       | Hall       |            80 | Sales           |
+| Christopher | Olsen      |            80 | Sales           |
+| Nanette     | Cambrault  |            80 | Sales           |
+| Oliver      | Tuvault    |            80 | Sales           |
+| Janette     | King       |            80 | Sales           |
+| Patrick     | Sully      |            80 | Sales           |
+| Allan       | McEwen     |            80 | Sales           |
+| Lindsey     | Smith      |            80 | Sales           |
+| Louise      | Doran      |            80 | Sales           |
+| Sarath      | Sewall     |            80 | Sales           |
+| Clara       | Vishney    |            80 | Sales           |
+| Danielle    | Greene     |            80 | Sales           |
+| Mattea      | Marvins    |            80 | Sales           |
+| David       | Lee        |            80 | Sales           |
+| Sundar      | Ande       |            80 | Sales           |
+| Amit        | Banda      |            80 | Sales           |
+| Lisa        | Ozer       |            80 | Sales           |
+| Harrison    | Bloom      |            80 | Sales           |
+| Tayler      | Fox        |            80 | Sales           |
+| William     | Smith      |            80 | Sales           |
+| Elizabeth   | Bates      |            80 | Sales           |
+| Sundita     | Kumar      |            80 | Sales           |
+| Ellen       | Abel       |            80 | Sales           |
+| Alyssa      | Hutton     |            80 | Sales           |
+| Jonathon    | Taylor     |            80 | Sales           |
+| Jack        | Livingston |            80 | Sales           |
+| Charles     | Johnson    |            80 | Sales           |
++-------------+------------+---------------+-----------------+
+35 rows in set (0.10 sec)
+
+5.) Write a query in SQL to display those employees who contain a letter z to their first name and also display their last name, department, city, and state province.
+
+SOLUTION:-
+
+mysql> SELECT FIRST_NAME,LAST_NAME,TEMP.DEPARTMENT_NAME,TEMP.CITY,TEMP.STATE_PROVINCE FROM EMPLOYEES LEFT JOIN (SELECT DEPARTMENT_ID,DEPARTMENT_NAME,LOCATIONS.CITY,LOCATIONS.STATE_PROVINCE FROM DEPARTMENTS LEFT JOIN LOCATIONS ON DEPARTMENTS.LOCATION_ID=LOCATIONS.LOCATION_ID) TEMP ON EMPLOYEES.DEPARTMENT_ID=TEMP.DEPARTMENT_ID WHERE FIRST_NAME REGEXP "^.*z.*$";
++------------+------------+-----------------+---------------------+----------------+
+| FIRST_NAME | LAST_NAME  | DEPARTMENT_NAME | CITY                | STATE_PROVINCE |
++------------+------------+-----------------+---------------------+----------------+
+| Mozhe      | Atkinson   | Shipping        | South San Francisco | California     |
+| Hazel      | Philtanker | Shipping        | South San Francisco | California     |
+| Elizabeth  | Bates      | Sales           | Oxford              | Oxford         |
++------------+------------+-----------------+---------------------+----------------+
+3 rows in set (0.00 sec)
+
+
+6.) Write a query in SQL to display all departments including those where does not have any employee. 
+
+solut
+
+7.) Write a query in SQL to display the first and last name and salary for those employees who earn less than the employee earn whose number is 182.
+
+SOLUTION:-
+
+mysql> SELECT FIRST_NAME,LAST_NAME,SALARY FROM EMPLOYEES WHERE SALARY < (SELECT SALARY FROM EMPLOYEES WHERE EMPLOYEE_ID=182);
++------------+------------+---------+
+| FIRST_NAME | LAST_NAME  | SALARY  |
++------------+------------+---------+
+| James      | Landry     | 2400.00 |
+| Steven     | Markle     | 2200.00 |
+| TJ         | Olson      | 2100.00 |
+| Ki         | Gee        | 2400.00 |
+| Hazel      | Philtanker | 2200.00 |
++------------+------------+---------+
+5 rows in set (0.00 sec)
+
+8.) Write a query in SQL to display the first name of all employees including the first name of their manager. 
+
+SOLUTION:-
+
+mysql> SELECT EMPLOYEES.FIRST_NAME AS EMPLOYEE,TEMP.FIRST_NAME AS MANAGER FROM EMPLOYEES LEFT JOIN (SELECT EMPLOYEE_ID,FIRST_NAME FROM EMPLOYEES) TEMP ON EMPLOYEES.MANAGER_ID=TEMP.EMPLOYEE_ID;
++-------------+-----------+
+| EMPLOYEE    | MANAGER   |
++-------------+-----------+
+| Steven      | NULL      |
+| Neena       | Steven    |
+| Lex         | Steven    |
+| Alexander   | Lex       |
+| Bruce       | Alexander |
+| David       | Alexander |
+| Valli       | Alexander |
+| Diana       | Alexander |
+......
+....
+..
+.
++-------------+-----------+
+107 rows in set (0.00 sec)
+
+9.) Write a query in SQL to display the department name, city, and state province for each department. 
+
+SOLUTION:-
+
+mysql> SELECT DEPARTMENTS.DEPARTMENT_NAME,LOCATIONS.CITY,LOCATIONS.STATE_PROVINCE FROM DEPARTMENTS LEFT JOIN LOCATIONS ON DEPARTMENTS.LOCATION_ID=LOCATIONS.LOCATION_ID;
++----------------------+---------------------+----------------+
+| DEPARTMENT_NAME      | CITY                | STATE_PROVINCE |
++----------------------+---------------------+----------------+
+| Administration       | Seattle             | Washington     |
+| Marketing            | Toronto             | Ontario        |
+| Purchasing           | Seattle             | Washington     |
+| Human Resources      | London              | NULL           |
+| Shipping             | South San Francisco | California     |
+| IT                   | Southlake           | Texas          |
+| Public Relations     | Munich              | Bavaria        |
+| Sales                | Oxford              | Oxford         |
+| Executive            | Seattle             | Washington     |
+| Finance              | Seattle             | Washington     |
+| Accounting           | Seattle             | Washington     |
+| Treasury             | Seattle             | Washington     |
+| Corporate Tax        | Seattle             | Washington     |
+| Control And Credit   | Seattle             | Washington     |
+| Shareholder Services | Seattle             | Washington     |
+| Benefits             | Seattle             | Washington     |
+| Manufacturing        | Seattle             | Washington     |
+| Construction         | Seattle             | Washington     |
+| Contracting          | Seattle             | Washington     |
+| Operations           | Seattle             | Washington     |
+| IT Support           | Seattle             | Washington     |
+| NOC                  | Seattle             | Washington     |
+| IT Helpdesk          | Seattle             | Washington     |
+| Government Sales     | Seattle             | Washington     |
+| Retail Sales         | Seattle             | Washington     |
+| Recruiting           | Seattle             | Washington     |
+| Payroll              | Seattle             | Washington     |
++----------------------+---------------------+----------------+
+27 rows in set (0.00 sec)
+
+10.) Write a query in SQL to display the first name, last name, department number and name, for all employees who have or have not any department. 
+
+SOLUTION:-
+
+mysql> SELECT FIRST_NAME, LAST_NAME, DEPARTMENTS.DEPARTMENT_ID, DEPARTMENTS.DEPARTMENT_NAME FROM EMPLOYEES RIGHT OUTER JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID;
++-------------+-------------+---------------+----------------------+
+| FIRST_NAME  | LAST_NAME   | DEPARTMENT_ID | DEPARTMENT_NAME      |
++-------------+-------------+---------------+----------------------+
+| Jennifer    | Whalen      |            10 | Administration       |
+| Michael     | Hartstein   |            20 | Marketing            |
+| Pat         | Fay         |            20 | Marketing            |
+| Den         | Raphaely    |            30 | Purchasing           |
+| Alexander   | Khoo        |            30 | Purchasing           |
+| Shelli      | Baida       |            30 | Purchasing           |
+| Sigal       | Tobias      |            30 | Purchasing           |
+| Guy         | Himuro      |            30 | Purchasing           |
+| Karen       | Colmenares  |            30 | Purchasing           |
+| Susan       | Mavris      |            40 | Human Resources      |
+| Matthew     | Weiss       |            50 | Shipping             |
+| Adam        | Fripp       |            50 | Shipping             |
+| Payam       | Kaufling    |            50 | Shipping             |
+| Shanta      | Vollman     |            50 | Shipping             |
+| Kevin       | Mourgos     |            50 | Shipping             |
+| Julia       | Nayer       |            50 | Shipping             |
+| Irene       | Mikkilineni |            50 | Shipping             |
+| James       | Landry      |            50 | Shipping             |
+| Steven      | Markle      |            50 | Shipping             |
+| Laura       | Bissot      |            50 | Shipping             |
+| Mozhe       | Atkinson    |            50 | Shipping             |
+| James       | Marlow      |            50 | Shipping             |
+| TJ          | Olson       |            50 | Shipping             |
+| Jason       | Mallin      |            50 | Shipping             |
+| Michael     | Rogers      |            50 | Shipping             |
+| Ki          | Gee         |            50 | Shipping             |
+| Hazel       | Philtanker  |            50 | Shipping             |
+| Renske      | Ladwig      |            50 | Shipping             |
+| Stephen     | Stiles      |            50 | Shipping             |
+| John        | Seo         |            50 | Shipping             |
+| Joshua      | Patel       |            50 | Shipping             |
+| Trenna      | Rajs        |            50 | Shipping             |
+| Curtis      | Davies      |            50 | Shipping             |
+| Randall     | Matos       |            50 | Shipping             |
+| Peter       | Vargas      |            50 | Shipping             |
+| Winston     | Taylor      |            50 | Shipping             |
+| Jean        | Fleaur      |            50 | Shipping             |
+| Martha      | Sullivan    |            50 | Shipping             |
+| Girard      | Geoni       |            50 | Shipping             |
+| Nandita     | Sarchand    |            50 | Shipping             |
+| Alexis      | Bull        |            50 | Shipping             |
+| Julia       | Dellinger   |            50 | Shipping             |
+| Anthony     | Cabrio      |            50 | Shipping             |
+| Kelly       | Chung       |            50 | Shipping             |
+| Jennifer    | Dilly       |            50 | Shipping             |
+| Timothy     | Gates       |            50 | Shipping             |
+| Randall     | Perkins     |            50 | Shipping             |
+| Sarah       | Bell        |            50 | Shipping             |
+| Britney     | Everett     |            50 | Shipping             |
+| Samuel      | McCain      |            50 | Shipping             |
+| Vance       | Jones       |            50 | Shipping             |
+| Alana       | Walsh       |            50 | Shipping             |
+| Kevin       | Feeney      |            50 | Shipping             |
+| Donald      | OConnell    |            50 | Shipping             |
+| Douglas     | Grant       |            50 | Shipping             |
+| Alexander   | Hunold      |            60 | IT                   |
+| Bruce       | Ernst       |            60 | IT                   |
+| David       | Austin      |            60 | IT                   |
+| Valli       | Pataballa   |            60 | IT                   |
+| Diana       | Lorentz     |            60 | IT                   |
+| Hermann     | Baer        |            70 | Public Relations     |
+| John        | Russell     |            80 | Sales                |
+| Karen       | Partners    |            80 | Sales                |
+| Alberto     | Errazuriz   |            80 | Sales                |
+| Gerald      | Cambrault   |            80 | Sales                |
+| Eleni       | Zlotkey     |            80 | Sales                |
+| Peter       | Tucker      |            80 | Sales                |
+| David       | Bernstein   |            80 | Sales                |
+| Peter       | Hall        |            80 | Sales                |
+| Christopher | Olsen       |            80 | Sales                |
+| Nanette     | Cambrault   |            80 | Sales                |
+| Oliver      | Tuvault     |            80 | Sales                |
+| Janette     | King        |            80 | Sales                |
+| Patrick     | Sully       |            80 | Sales                |
+| Allan       | McEwen      |            80 | Sales                |
+| Lindsey     | Smith       |            80 | Sales                |
+| Louise      | Doran       |            80 | Sales                |
+| Sarath      | Sewall      |            80 | Sales                |
+| Clara       | Vishney     |            80 | Sales                |
+| Danielle    | Greene      |            80 | Sales                |
+| Mattea      | Marvins     |            80 | Sales                |
+| David       | Lee         |            80 | Sales                |
+| Sundar      | Ande        |            80 | Sales                |
+| Amit        | Banda       |            80 | Sales                |
+| Lisa        | Ozer        |            80 | Sales                |
+| Harrison    | Bloom       |            80 | Sales                |
+| Tayler      | Fox         |            80 | Sales                |
+| William     | Smith       |            80 | Sales                |
+| Elizabeth   | Bates       |            80 | Sales                |
+| Sundita     | Kumar       |            80 | Sales                |
+| Ellen       | Abel        |            80 | Sales                |
+| Alyssa      | Hutton      |            80 | Sales                |
+| Jonathon    | Taylor      |            80 | Sales                |
+| Jack        | Livingston  |            80 | Sales                |
+| Charles     | Johnson     |            80 | Sales                |
+| Steven      | King        |            90 | Executive            |
+| Neena       | Kochhar     |            90 | Executive            |
+| Lex         | De Haan     |            90 | Executive            |
+| Nancy       | Greenberg   |           100 | Finance              |
+| Daniel      | Faviet      |           100 | Finance              |
+| John        | Chen        |           100 | Finance              |
+| Ismael      | Sciarra     |           100 | Finance              |
+| Jose Manuel | Urman       |           100 | Finance              |
+| Luis        | Popp        |           100 | Finance              |
+| Shelley     | Higgins     |           110 | Accounting           |
+| William     | Gietz       |           110 | Accounting           |
+| NULL        | NULL        |           120 | Treasury             |
+| NULL        | NULL        |           130 | Corporate Tax        |
+| NULL        | NULL        |           140 | Control And Credit   |
+| NULL        | NULL        |           150 | Shareholder Services |
+| NULL        | NULL        |           160 | Benefits             |
+| NULL        | NULL        |           170 | Manufacturing        |
+| NULL        | NULL        |           180 | Construction         |
+| NULL        | NULL        |           190 | Contracting          |
+| NULL        | NULL        |           200 | Operations           |
+| NULL        | NULL        |           210 | IT Support           |
+| NULL        | NULL        |           220 | NOC                  |
+| NULL        | NULL        |           230 | IT Helpdesk          |
+| NULL        | NULL        |           240 | Government Sales     |
+| NULL        | NULL        |           250 | Retail Sales         |
+| NULL        | NULL        |           260 | Recruiting           |
+| NULL        | NULL        |           270 | Payroll              |
++-------------+-------------+---------------+----------------------+
+122 rows in set (0.00 sec)
+
+11.) Write a query in SQL to display the first name of all employees and the first name of their manager including those who does not working under any manager.
+
+SOLUTION:-
+
+mysql> SELECT EMPLOYEES.FIRST_NAME,TEMP.FIRST_NAME FROM EMPLOYEES LEFT JOIN (SELECT EMPLOYEE_ID,FIRST_NAME FROM EMPLOYEES) TEMP ON EMPLOYEES.MANAGER_ID=TEMP.EMPLOYEE_ID;
++-------------+------------+
+| FIRST_NAME  | FIRST_NAME |
++-------------+------------+
+| Steven      | NULL       |
+| Neena       | Steven     |
+| Lex         | Steven     |
+| Alexander   | Lex        |
+| Bruce       | Alexander  |
+| David       | Alexander  |
+| Valli       | Alexander  |
+| Diana       | Alexander  |
+| Nancy       | Neena      |
+.....
+....
+...
+..
+.
++-------------+------------+
+107 rows in set (0.00 sec)
+
+12.) Write a query in SQL to display the first name, last name, and department number for those employees who works in the same department as the employee who holds the last name as Taylor.
+
+SOLUTION:-
+
+mysql> SELECT FIRST_NAME,LAST_NAME,DEPARTMENT_ID FROM EMPLOYEES WHERE DEPARTMENT_ID=ANY(SELECT DEPARTMENT_ID FROM EMPLOYEES WHERE LAST_NAME="TAYLOR") AND LAST_NAME<>"TAYLOR";
++-------------+-------------+---------------+
+| FIRST_NAME  | LAST_NAME   | DEPARTMENT_ID |
++-------------+-------------+---------------+
+| John        | Russell     |            80 |
+| Karen       | Partners    |            80 |
+| Alberto     | Errazuriz   |            80 |
+| Gerald      | Cambrault   |            80 |
+| Eleni       | Zlotkey     |            80 |
+| Peter       | Tucker      |            80 |
+| David       | Bernstein   |            80 |
+| Peter       | Hall        |            80 |
+| Christopher | Olsen       |            80 |
+| Nanette     | Cambrault   |            80 |
+| Oliver      | Tuvault     |            80 |
+.....
+....
+..
++-------------+-------------+---------------+
+77 rows in set (0.00 sec)
+
+13.) Write a query in SQL to display the job title, department name, full name (first and last name ) of employee, and starting date for all the jobs which started on or after 1st January, 1993 and ending with on or before 31 August, 1997.
+
+SOLUTION:-
+
+mysql> SELECT JOBS.JOB_TITLE, TEMP.FULL_NAME, TEMP.DEPARTMENT_NAME FROM JOBS LEFT JOIN (SELECT CONCAT(FIRST_NAME, " ", LAST_NAME) AS "FULL_NAME", DEPARTMENTS.DEPARTMENT_NAME,EMPLOYEES.JOB_ID FROM EMPLOYEES LEFT JOIN DEPARTMENTS ON DEPARTMENTS.DEPARTMENT_ID=EMPLOYEES.DEPARTMENT_ID WHERE HIRE_DATE>"1993-01-01" AND HIRE_DATE < "1997-08-31") TEMP ON TEMP.JOB_ID=JOBS.JOB_ID;
++---------------------------------+-------------------+------------------+
+| JOB_TITLE                       | FULL_NAME         | DEPARTMENT_NAME  |
++---------------------------------+-------------------+------------------+
+| Public Accountant               | William Gietz     | Accounting       |
+| Accounting Manager              | Shelley Higgins   | Accounting       |
+| Administration Assistant        | NULL              | NULL             |
+| President                       | NULL              | NULL             |
+| Administration Vice President   | Lex De Haan       | Executive        |
+| Accountant                      | Daniel Faviet     | Finance          |
+| Finance Manager                 | Nancy Greenberg   | Finance          |
+| Human Resources Representative  | Susan Mavris      | Human Resources  |
+| Programmer                      | David Austin      | IT               |
+| Marketing Manager               | Michael Hartstein | Marketing        |
+| Marketing Representative        | Pat Fay           | Marketing        |
+| Public Relations Representative | Hermann Baer      | Public Relations |
+| Purchasing Clerk                | Alexander Khoo    | Purchasing       |
+| Purchasing Clerk                | Sigal Tobias      | Purchasing       |
+| Purchasing Manager              | Den Raphaely      | Purchasing       |
+| Sales Manager                   | John Russell      | Sales            |
+| Sales Manager                   | Karen Partners    | Sales            |
+| Sales Manager                   | Alberto Errazuriz | Sales            |
+| Sales Representative            | Peter Tucker      | Sales            |
+| Sales Representative            | David Bernstein   | Sales            |
+| Sales Representative            | Peter Hall        | Sales            |
+| Sales Representative            | Janette King      | Sales            |
+| Sales Representative            | Patrick Sully     | Sales            |
+| Sales Representative            | Allan McEwen      | Sales            |
+| Sales Representative            | Lindsey Smith     | Sales            |
+| Sales Representative            | Lisa Ozer         | Sales            |
+| Sales Representative            | Ellen Abel        | Sales            |
+| Sales Representative            | Alyssa Hutton     | Sales            |
+| Shipping Clerk                  | Nandita Sarchand  | Shipping         |
+| Shipping Clerk                  | Alexis Bull       | Shipping         |
+| Shipping Clerk                  | Kelly Chung       | Shipping         |
+| Shipping Clerk                  | Jennifer Dilly    | Shipping         |
+| Shipping Clerk                  | Sarah Bell        | Shipping         |
+| Shipping Clerk                  | Britney Everett   | Shipping         |
+| Stock Clerk                     | Julia Nayer       | Shipping         |
+| Stock Clerk                     | Laura Bissot      | Shipping         |
+| Stock Clerk                     | James Marlow      | Shipping         |
+| Stock Clerk                     | Jason Mallin      | Shipping         |
+| Stock Clerk                     | Renske Ladwig     | Shipping         |
+| Stock Clerk                     | Trenna Rajs       | Shipping         |
+| Stock Clerk                     | Curtis Davies     | Shipping         |
+| Stock Manager                   | Matthew Weiss     | Shipping         |
+| Stock Manager                   | Adam Fripp        | Shipping         |
+| Stock Manager                   | Payam Kaufling    | Shipping         |
++---------------------------------+-------------------+------------------+
+44 rows in set (0.10 sec)
+
+14.) Write a query in SQL to display job title, full name (first and last name ) of employee, and the difference between maximum salary for the job and salary of the employee.
+
+SOLUTION:-
+
+mysql> SELECT JOBS.JOB_ID, TEMP.FULL_NAME,TEMP.SAL_DIFF FROM JOBS LEFT JOIN (SELECT CONCAT(FIRST_NAME," ",LAST_NAME) AS FULL_NAME, ((SELECT MAX(SALARY) FROM EMPLOYEES E WHERE E.JOB_ID=EMPLOYEES.JOB_ID GROUP BY JOB_ID) - SALARY) AS "SAL_DIFF", JOB_ID FROM EMPLOYEES) TEMP ON JOBS.JOB_ID=TEMP.JOB_ID;
++------------+-------------------+----------+
+| JOB_ID     | FULL_NAME         | SAL_DIFF |
++------------+-------------------+----------+
+| AC_ACCOUNT | William Gietz     |     0.00 |
+| AC_MGR     | Shelley Higgins   |     0.00 |
+| AD_ASST    | Jennifer Whalen   |     0.00 |
+| AD_PRES    | Steven King       |     0.00 |
+| AD_VP      | Neena Kochhar     |     0.00 |
+| AD_VP      | Lex De Haan       |     0.00 |
+| FI_ACCOUNT | Daniel Faviet     |     0.00 |
+| FI_ACCOUNT | John Chen         |   800.00 |
+| FI_ACCOUNT | Ismael Sciarra    |  1300.00 |
+| FI_ACCOUNT | Jose Manuel Urman |  1200.00 |
+| FI_ACCOUNT | Luis Popp         |  2100.00 |
+| FI_MGR     | Nancy Greenberg   |     0.00 |
+| HR_REP     | Susan Mavris      |     0.00 |
+| IT_PROG    | Alexander Hunold  |     0.00 |
+| IT_PROG    | Bruce Ernst       |  3000.00 |
+| IT_PROG    | David Austin      |  4200.00 |
+| IT_PROG    | Valli Pataballa   |  4200.00 |
+| IT_PROG    | Diana Lorentz     |  4800.00 |
+| MK_MAN     | Michael Hartstein |     0.00 |
+| MK_REP     | Pat Fay           |     0.00 |
+| PR_REP     | Hermann Baer      |     0.00 |
+| PU_CLERK   | Alexander Khoo    |     0.00 |
+| PU_CLERK   | Shelli Baida      |   200.00 |
+| PU_CLERK   | Sigal Tobias      |   300.00 |
+| PU_CLERK   | Guy Himuro        |   500.00 |
+| PU_CLERK   | Karen Colmenares  |   600.00 |
+| PU_MAN     | Den Raphaely      |     0.00 |
+| SA_MAN     | John Russell      |     0.00 |
+| SA_MAN     | Karen Partners    |   500.00 |
+| SA_MAN     | Alberto Errazuriz |  2000.00 |
+| SA_MAN     | Gerald Cambrault  |  3000.00 |
+| SA_MAN     | Eleni Zlotkey     |  3500.00 |
+| SA_REP     | Peter Tucker      |  1500.00 |
+| SA_REP     | David Bernstein   |  2000.00 |
+| SA_REP     | Peter Hall        |  2500.00 |
+| SA_REP     | Christopher Olsen |  3500.00 |
+| SA_REP     | Nanette Cambrault |  4000.00 |
+| SA_REP     | Oliver Tuvault    |  4500.00 |
+| SA_REP     | Janette King      |  1500.00 |
+| SA_REP     | Patrick Sully     |  2000.00 |
+| SA_REP     | Allan McEwen      |  2500.00 |
+| SA_REP     | Lindsey Smith     |  3500.00 |
+| SA_REP     | Louise Doran      |  4000.00 |
+| SA_REP     | Sarath Sewall     |  4500.00 |
+| SA_REP     | Clara Vishney     |  1000.00 |
+| SA_REP     | Danielle Greene   |  2000.00 |
+| SA_REP     | Mattea Marvins    |  4300.00 |
+| SA_REP     | David Lee         |  4700.00 |
+| SA_REP     | Sundar Ande       |  5100.00 |
+| SA_REP     | Amit Banda        |  5300.00 |
+| SA_REP     | Lisa Ozer         |     0.00 |
+| SA_REP     | Harrison Bloom    |  1500.00 |
+| SA_REP     | Tayler Fox        |  1900.00 |
+| SA_REP     | William Smith     |  4100.00 |
+| SA_REP     | Elizabeth Bates   |  4200.00 |
+| SA_REP     | Sundita Kumar     |  5400.00 |
+| SA_REP     | Ellen Abel        |   500.00 |
+| SA_REP     | Alyssa Hutton     |  2700.00 |
+| SA_REP     | Jonathon Taylor   |  2900.00 |
+| SA_REP     | Jack Livingston   |  3100.00 |
+| SA_REP     | Kimberely Grant   |  4500.00 |
+| SA_REP     | Charles Johnson   |  5300.00 |
+| SH_CLERK   | Winston Taylor    |  1000.00 |
+| SH_CLERK   | Jean Fleaur       |  1100.00 |
+| SH_CLERK   | Martha Sullivan   |  1700.00 |
+| SH_CLERK   | Girard Geoni      |  1400.00 |
+| SH_CLERK   | Nandita Sarchand  |     0.00 |
+| SH_CLERK   | Alexis Bull       |   100.00 |
+| SH_CLERK   | Julia Dellinger   |   800.00 |
+| SH_CLERK   | Anthony Cabrio    |  1200.00 |
+| SH_CLERK   | Kelly Chung       |   400.00 |
+| SH_CLERK   | Jennifer Dilly    |   600.00 |
+| SH_CLERK   | Timothy Gates     |  1300.00 |
+| SH_CLERK   | Randall Perkins   |  1700.00 |
+| SH_CLERK   | Sarah Bell        |   200.00 |
+| SH_CLERK   | Britney Everett   |   300.00 |
+| SH_CLERK   | Samuel McCain     |  1000.00 |
+| SH_CLERK   | Vance Jones       |  1400.00 |
+| SH_CLERK   | Alana Walsh       |  1100.00 |
+| SH_CLERK   | Kevin Feeney      |  1200.00 |
+| SH_CLERK   | Donald OConnell   |  1600.00 |
+| SH_CLERK   | Douglas Grant     |  1600.00 |
+| ST_CLERK   | Julia Nayer       |   400.00 |
+| ST_CLERK   | Irene Mikkilineni |   900.00 |
+| ST_CLERK   | James Landry      |  1200.00 |
+| ST_CLERK   | Steven Markle     |  1400.00 |
+| ST_CLERK   | Laura Bissot      |   300.00 |
+| ST_CLERK   | Mozhe Atkinson    |   800.00 |
+| ST_CLERK   | James Marlow      |  1100.00 |
+| ST_CLERK   | TJ Olson          |  1500.00 |
+| ST_CLERK   | Jason Mallin      |   300.00 |
+| ST_CLERK   | Michael Rogers    |   700.00 |
+| ST_CLERK   | Ki Gee            |  1200.00 |
+| ST_CLERK   | Hazel Philtanker  |  1400.00 |
+| ST_CLERK   | Renske Ladwig     |     0.00 |
+| ST_CLERK   | Stephen Stiles    |   400.00 |
+| ST_CLERK   | John Seo          |   900.00 |
+| ST_CLERK   | Joshua Patel      |  1100.00 |
+| ST_CLERK   | Trenna Rajs       |   100.00 |
+| ST_CLERK   | Curtis Davies     |   500.00 |
+| ST_CLERK   | Randall Matos     |  1000.00 |
+| ST_CLERK   | Peter Vargas      |  1100.00 |
+| ST_MAN     | Matthew Weiss     |   200.00 |
+| ST_MAN     | Adam Fripp        |     0.00 |
+| ST_MAN     | Payam Kaufling    |   300.00 |
+| ST_MAN     | Shanta Vollman    |  1700.00 |
+| ST_MAN     | Kevin Mourgos     |  2400.00 |
++------------+-------------------+----------+
+107 rows in set (0.00 sec)
+
+15.) Write a query in SQL to display the name of the department, average salary and number of employees working in that department who got commission.
+
+SOLUTION:-
+
+mysql> SELECT TEMP2.*,TEMP1.NUM_OF_EMPLOYEES FROM 
+	  (SELECT COUNT(*) AS "NUM_OF_EMPLOYEES", DEPARTMENT_ID FROM EMPLOYEES WHERE DEPARTMENT_ID IS NOT NULL GROUP BY           DEPARTMENT_ID) TEMP1 
+	
+       LEFT JOIN 
+	  (SELECT DEPARTMENTS.DEPARTMENT_ID,DEPARTMENTS.DEPARTMENT_NAME,(SELECT AVG(SALARY) FROM EMPLOYEES E WHERE            DEPARTMENTS.DEPARTMENT_ID=E.DEPARTMENT_ID GROUP BY E.DEPARTMENT_ID) AS "AVG_SALARY" FROM DEPARTMENTS) TEMP2 
+	
+       ON TEMP1.DEPARTMENT_ID=TEMP2.DEPARTMENT_ID;
+
++---------------+------------------+--------------+------------------+
+| DEPARTMENT_ID | DEPARTMENT_NAME  | AVG_SALARY   | NUM_OF_EMPLOYEES |
++---------------+------------------+--------------+------------------+
+|            10 | Administration   |  4400.000000 |                1 |
+|            20 | Marketing        |  9500.000000 |                2 |
+|            30 | Purchasing       |  4150.000000 |                6 |
+|            40 | Human Resources  |  6500.000000 |                1 |
+|            50 | Shipping         |  3475.555556 |               45 |
+|            60 | IT               |  5760.000000 |                5 |
+|            70 | Public Relations | 10000.000000 |                1 |
+|            80 | Sales            |  8955.882353 |               34 |
+|            90 | Executive        | 19333.333333 |                3 |
+|           100 | Finance          |  8600.000000 |                6 |
+|           110 | Accounting       | 10150.000000 |                2 |
++---------------+------------------+------ --------+------------------+
+11 rows in set (0.00 sec)
+
+16.) Write a query in SQL to display the full name (first and last name ) of employees, job title and the salary differences to their own job for those employees who is working in the department ID 80. 
+
+17.) 17. Write a query in SQL to display the name of the country, city, and the departments which are running there.
+
+SOLUTION:-
+
+mysql> SELECT DEPARTMENTS.DEPARTMENT_NAME, TEMP.COUNTRY_NAME,TEMP.CITY FROM DEPARTMENTS LEFT JOIN (SELECT COUNTRIES.COUNTRY_NAME,LOCATIONS.CITY,LOCATIONS.LOCATION_ID FROM LOCATIONS LEFT JOIN COUNTRIES ON LOCATIONS.COUNTRY_ID=COUNTRIES.COUNTRY_ID) TEMP ON DEPARTMENTS.LOCATION_ID=TEMP.LOCATION_ID;
++----------------------+--------------------------+---------------------+
+| DEPARTMENT_NAME      | COUNTRY_NAME             | CITY                |
++----------------------+--------------------------+---------------------+
+| Administration       | United States of America | Seattle             |
+| Marketing            | Canada                   | Toronto             |
+| Purchasing           | United States of America | Seattle             |
+| Human Resources      | United Kingdom           | London              |
+| Shipping             | United States of America | South San Francisco |
+| IT                   | United States of America | Southlake           |
+| Public Relations     | Germany                  | Munich              |
+| Sales                | United Kingdom           | Oxford              |
+| Executive            | United States of America | Seattle             |
+| Finance              | United States of America | Seattle             |
+| Accounting           | United States of America | Seattle             |
+| Treasury             | United States of America | Seattle             |
+| Corporate Tax        | United States of America | Seattle             |
+| Control And Credit   | United States of America | Seattle             |
+| Shareholder Services | United States of America | Seattle             |
+| Benefits             | United States of America | Seattle             |
+| Manufacturing        | United States of America | Seattle             |
+| Construction         | United States of America | Seattle             |
+| Contracting          | United States of America | Seattle             |
+| Operations           | United States of America | Seattle             |
+| IT Support           | United States of America | Seattle             |
+| NOC                  | United States of America | Seattle             |
+| IT Helpdesk          | United States of America | Seattle             |
+| Government Sales     | United States of America | Seattle             |
+| Retail Sales         | United States of America | Seattle             |
+| Recruiting           | United States of America | Seattle             |
+| Payroll              | United States of America | Seattle             |
++----------------------+--------------------------+---------------------+
+27 rows in set (0.00 sec)
+
+18.) Write a query in SQL to display department name and the full name (first and last name) of the manager
+
+SOLUTION:-
+
+SELECT DEPARTMENTS.DEPARTMENT_NAME, TEMP.FULL_NAME FROM DEPARTMENTS RIGHT JOIN
+    SELECT CONCAT(FIRST_NAME," ",LAST_NAME) AS FULL_NAME, DEPARTMENT_ID FROM EMPLOYEES WHERE EMPLOYEES.EMPLOYEE_ID=ANY(SELECT  DISTINCT(MANAGER_ID) FROM EMPLOYEES)) TEMP
+    ON DEPARTMENTS.DEPARTMENT_ID=TEMP.DEPARTMENT_ID;
++-----------------+-------------------+
+| DEPARTMENT_NAME | FULL_NAME         |
++-----------------+-------------------+
+| Executive       | Steven King       |
+| Executive       | Neena Kochhar     |
+| Executive       | Lex De Haan       |
+| IT              | Alexander Hunold  |
+| Finance         | Nancy Greenberg   |
+| Purchasing      | Den Raphaely      |
+| Shipping        | Matthew Weiss     |
+| Shipping        | Adam Fripp        |
+| Shipping        | Payam Kaufling    |
+| Shipping        | Shanta Vollman    |
+| Shipping        | Kevin Mourgos     |
+| Sales           | John Russell      |
+| Sales           | Karen Partners    |
+| Sales           | Alberto Errazuriz |
+| Sales           | Gerald Cambrault  |
+| Sales           | Eleni Zlotkey     |
+| Marketing       | Michael Hartstein |
+| Accounting      | Shelley Higgins   |
++-----------------+-------------------+
+18 rows in set (0.00 sec)
+
+19.) Write a query in SQL to display job title and average salary of employees.
+
+SOLUTION:-
+
+mysql> SELECT JOBS.JOB_TITLE,TEMP.AVG_SAL FROM JOBS LEFT JOIN (SELECT AVG(SALARY) AS AVG_SAL, JOB_ID FROM EMPLOYEES GROUP BY JOB_ID) TEMP ON TEMP.JOB_ID=JOBS.JOB_ID;
++---------------------------------+--------------+
+| JOB_TITLE                       | AVG_SAL      |
++---------------------------------+--------------+
+| Public Accountant               |  8300.000000 |
+| Accounting Manager              | 12000.000000 |
+| Administration Assistant        |  4400.000000 |
+| President                       | 24000.000000 |
+| Administration Vice President   | 17000.000000 |
+| Accountant                      |  7920.000000 |
+| Finance Manager                 | 12000.000000 |
+| Human Resources Representative  |  6500.000000 |
+| Programmer                      |  5760.000000 |
+| Marketing Manager               | 13000.000000 |
+| Marketing Representative        |  6000.000000 |
+| Public Relations Representative | 10000.000000 |
+| Purchasing Clerk                |  2780.000000 |
+| Purchasing Manager              | 11000.000000 |
+| Sales Manager                   | 12200.000000 |
+| Sales Representative            |  8350.000000 |
+| Shipping Clerk                  |  3215.000000 |
+| Stock Clerk                     |  2785.000000 |
+| Stock Manager                   |  7280.000000 |
++---------------------------------+--------------+
+19 rows in set (0.00 sec)
+
+20.) Write a query in SQL to display the details of jobs which was done by any of the employees who is presently earning a salary on and above 12000.
+
+SOLUTION:-
+
+mysql> SELECT JOBS.* FROM JOBS WHERE JOBS.JOB_ID=ANY(SELECT JOB_ID FROM EMPLOYEES WHERE SALARY>=12000);
++---------+-------------------------------+------------+------------+
+| job_id  | job_title                     | min_salary | max_salary |
++---------+-------------------------------+------------+------------+
+| AC_MGR  | Accounting Manager            |       8200 |      16000 |
+| AD_PRES | President                     |      20000 |      40000 |
+| AD_VP   | Administration Vice President |      15000 |      30000 |
+| FI_MGR  | Finance Manager               |       8200 |      16000 |
+| MK_MAN  | Marketing Manager             |       9000 |      15000 |
+| SA_MAN  | Sales Manager                 |      10000 |      20000 |
++---------+-------------------------------+------------+------------+
+6 rows in set (0.00 sec)
+
+21.) Write a query in SQL to display the country name, city, and number of those departments where at leaste 2 employees are working.
+
+SOLUTION:-
+
+mysql> SELECT COUNTRIES.COUNTRY_NAME,TEMP3.CITY,TEMP3.DEPARTMENT_ID FROM COUNTRIES RIGHT JOIN (SELECT LOCATIONS.CITY,LOCATIONS.COUNTRY_ID,TEMP2.* FROM LOCATIONS RIGHT JOIN (SELECT DEPARTMENTS.LOCATION_ID, TEMP.* FROM DEPARTMENTS RIGHT JOIN (SELECT COUNT(*) AS "NUM_OF_EMPLOYEES",DEPARTMENT_ID FROM EMPLOYEES GROUP BY DEPARTMENT_ID HAVING NUM_OF_EMPLOYEES>1) TEMP ON DEPARTMENTS.DEPARTMENT_ID=TEMP.DEPARTMENT_ID) TEMP2 ON LOCATIONS.LOCATION_ID=TEMP2.LOCATION_ID) TEMP3 ON TEMP3.COUNTRY_ID=COUNTRIES.COUNTRY_ID;
++--------------------------+---------------------+---------------+
+| COUNTRY_NAME             | CITY                | DEPARTMENT_ID |
++--------------------------+---------------------+---------------+
+| Canada                   | Toronto             |            20 |
+| United States of America | Seattle             |            30 |
+| United States of America | South San Francisco |            50 |
+| United States of America | Southlake           |            60 |
+| United Kingdom           | Oxford              |            80 |
+| United States of America | Seattle             |            90 |
+| United States of America | Seattle             |           100 |
+| United States of America | Seattle             |           110 |
++--------------------------+---------------------+---------------+
+8 rows in set (0.00 sec)
+
+22.) Write a query in SQL to display the department name, full name (first and last name) of manager, and their city.
+
+SOLUTION:-
+
+mysql> SELECT LOCATIONS.CITY,TEMP1.FULL_NAME FROM LOCATIONS RIGHT JOIN (SELECT DEPARTMENTS.LOCATION_ID, TEMP.FULL_NAME FROM DEPARTMENTS RIGHT JOIN (SELECT CONCAT(FIRST_NAME," ",LAST_NAME) AS FULL_NAME,DEPARTMENT_ID FROM EMPLOYEES WHERE EMPLOYEES.EMPLOYEE_ID=ANY(SELECT DISTINCT(MANAGER_ID) FROM EMPLOYEES)) TEMP ON  TEMP.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID) TEMP1 ON LOCATIONS.LOCATION_ID=TEMP1.LOCATION_ID;
++---------------------+-------------------+
+| CITY                | FULL_NAME         |
++---------------------+-------------------+
+| Seattle             | Steven King       |
+| Seattle             | Neena Kochhar     |
+| Seattle             | Lex De Haan       |
+| Southlake           | Alexander Hunold  |
+| Seattle             | Nancy Greenberg   |
+| Seattle             | Den Raphaely      |
+| South San Francisco | Matthew Weiss     |
+| South San Francisco | Adam Fripp        |
+| South San Francisco | Payam Kaufling    |
+| South San Francisco | Shanta Vollman    |
+| South San Francisco | Kevin Mourgos     |
+| Oxford              | John Russell      |
+| Oxford              | Karen Partners    |
+| Oxford              | Alberto Errazuriz |
+| Oxford              | Gerald Cambrault  |
+| Oxford              | Eleni Zlotkey     |
+| Toronto             | Michael Hartstein |
+| Seattle             | Shelley Higgins   |
++---------------------+-------------------+
+18 rows in set (0.00 sec)
+
+23.) Write a query in SQL to display the employee ID, job name, number of days worked in for all those jobs in department 80.
+
+SOLUTION:-
+
+mysql> SELECT TEMP.FULL_NAME,TEMP.NUM_OF_DAYS,JOBS.JOB_TITLE FROM JOBS RIGHT JOIN (SELECT CONCAT(FIRST_NAME," ",LAST_NAME) AS FULL_NAME,JOB_ID,(DATEDIFF(NOW(), HIRE_DATE)) AS "NUM_OF_DAYS" FROM EMPLOYEES WHERE DEPARTMENT_ID=80) TEMP ON TEMP.JOB_ID=JOBS.JOB_ID;
+
++-------------------+-------------+----------------------+
+| FULL_NAME         | NUM_OF_DAYS | JOB_TITLE            |
++-------------------+-------------+----------------------+
+| John Russell      |        9092 | Sales Manager        |
+| Karen Partners    |        8996 | Sales Manager        |
+| Alberto Errazuriz |        8932 | Sales Manager        |
+| Gerald Cambrault  |        7983 | Sales Manager        |
+| Eleni Zlotkey     |        7877 | Sales Manager        |
+| Peter Tucker      |        8971 | Sales Representative |
+| David Bernstein   |        8918 | Sales Representative |
+| Peter Hall        |        8769 | Sales Representative |
+| Christopher Olsen |        8547 | Sales Representative |
+| Nanette Cambrault |        8293 | Sales Representative |
+| Oliver Tuvault    |        7944 | Sales Representative |
+| Janette King      |        9337 | Sales Representative |
+| Patrick Sully     |        9303 | Sales Representative |
+| Allan McEwen      |        9153 | Sales Representative |
+| Lindsey Smith     |        8932 | Sales Representative |
+| Louise Doran      |        8652 | Sales Representative |
+| Sarath Sewall     |        8329 | Sales Representative |
+| Clara Vishney     |        8686 | Sales Representative |
+| Danielle Greene   |        8193 | Sales Representative |
+| Mattea Marvins    |        7882 | Sales Representative |
+| David Lee         |        7852 | Sales Representative |
+| Sundar Ande       |        7822 | Sales Representative |
+| Amit Banda        |        7794 | Sales Representative |
+| Lisa Ozer         |        8931 | Sales Representative |
+| Harrison Bloom    |        8554 | Sales Representative |
+| Tayler Fox        |        8612 | Sales Representative |
+| William Smith     |        8217 | Sales Representative |
+| Elizabeth Bates   |        8188 | Sales Representative |
+| Sundita Kumar     |        7794 | Sales Representative |
+| Ellen Abel        |        9235 | Sales Representative |
+| Alyssa Hutton     |        8923 | Sales Representative |
+| Jonathon Taylor   |        8553 | Sales Representative |
+| Jack Livingston   |        8523 | Sales Representative |
+| Charles Johnson   |        7902 | Sales Representative |
++-------------------+-------------+----------------------+
+34 rows in set (0.00 sec)
+
+24.) Write a query in SQL to display the full name (first and last name), and salary of those employees who working in any department located in London.
+
+SOLUTION:-
+
+mysql> SELECT CONCAT(FIRST_NAME," ",LAST_NAME) AS FULL_NAME, SALARY,DEPARTMENT_ID FROM EMPLOYEES WHERE DEPARTMENT_ID=ANY(SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID=ANY(SELECT LOCATION_ID FROM LOCATIONS WHERE CITY="LONDON"));
++--------------+---------+---------------+
+| FULL_NAME    | SALARY  | DEPARTMENT_ID |
++--------------+---------+---------------+
+| Susan Mavris | 6500.00 |            40 |
++--------------+---------+---------------+
+1 row in set (0.00 sec)
+
+
+25.)  Write a query in SQL to display full name(first and last name), job title, starting and ending date of last jobs for those employees with worked without a commission percentage.
+
+26.) Write a query in SQL to display the department name and number of employees in each of the department.
+
+SOLUTION:-
+
+mysql> SELECT DEPARTMENTS.DEPARTMENT_NAME, TEMP.NUM_OF_EMPLOYEES FROM DEPARTMENTS RIGHT JOIN (SELECT COUNT(*) AS NUM_OF_EMPLOYEES, DEPARTMENT_ID FROM EMPLOYEES GROUP BY DEPARTMENT_ID) TEMP ON TEMP.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID WHERE DEPARTMENT_NAME IS NOT NULL;
++------------------+------------------+
+| DEPARTMENT_NAME  | NUM_OF_EMPLOYEES |
++------------------+------------------+
+| Administration   |                1 |
+| Marketing        |                2 |
+| Purchasing       |                6 |
+| Human Resources  |                1 |
+| Shipping         |               45 |
+| IT               |                5 |
+| Public Relations |                1 |
+| Sales            |               34 |
+| Executive        |                3 |
+| Finance          |                6 |
+| Accounting       |                2 |
++------------------+------------------+
+11 rows in set (0.00 sec)
+
+27.) Write a query in SQL to display the full name (firt and last name ) of employee with ID and name of the country presently where (s)he is working.
+
+SOLUTION:-
+
+mysql> SELECT CONCAT(EMPLOYEE_ID," ",FIRST_NAME," ",LAST_NAME), TEMP1.COUNTRY_NAME FROM  EMPLOYEES LEFT JOIN (SELECT DEPARTMENTS.DEPARTMENT_ID,TEMP.COUNTRY_NAME FROM DEPARTMENTS LEFT JOIN (SELECT LOCATIONS.LOCATION_ID,COUNTRIES.COUNTRY_NAME FROM LOCATIONS LEFT JOIN COUNTRIES ON LOCATIONS.COUNTRY_ID=COUNTRIES.COUNTRY_ID) TEMP ON DEPARTMENTS.LOCATION_ID=TEMP.LOCATION_ID) TEMP1 ON EMPLOYEES.DEPARTMENT_ID=TEMP1.DEPARTMENT_ID;
++--------------------------------------------------+--------------------------+
+| CONCAT(EMPLOYEE_ID," ",FIRST_NAME," ",LAST_NAME) | COUNTRY_NAME             |
++--------------------------------------------------+--------------------------+
+| 100 Steven King                                  | United States of America |
+| 101 Neena Kochhar                                | United States of America |
+| 102 Lex De Haan                                  | United States of America |
+| 103 Alexander Hunold                             | United States of America |
+| 104 Bruce Ernst                                  | United States of America |
+| 105 David Austin                                 | United States of America |
+| 106 Valli Pataballa                              | United States of America |
+| 107 Diana Lorentz                                | United States of America |
+| 108 Nancy Greenberg                              | United States of America |
+| 109 Daniel Faviet                                | United States of America |
+| 110 John Chen                                    | United States of America |
+| 111 Ismael Sciarra                               | United States of America |
+| 112 Jose Manuel Urman                            | United States of America |
+| 113 Luis Popp                                    | United States of America |
+| 114 Den Raphaely                                 | United States of America |
+| 115 Alexander Khoo                               | United States of America |
+| 116 Shelli Baida                                 | United States of America |
+| 117 Sigal Tobias                                 | United States of America |
+| 118 Guy Himuro                                   | United States of America |
+| 119 Karen Colmenares                             | United States of America |
+| 120 Matthew Weiss                                | United States of America |
+| 121 Adam Fripp                                   | United States of America |
+| 122 Payam Kaufling                               | United States of America |
+| 123 Shanta Vollman                               | United States of America |
+| 124 Kevin Mourgos                                | United States of America |
+| 125 Julia Nayer                                  | United States of America |
+| 126 Irene Mikkilineni                            | United States of America |
+| 127 James Landry                                 | United States of America |
+| 128 Steven Markle                                | United States of America |
+| 129 Laura Bissot                                 | United States of America |
+| 130 Mozhe Atkinson                               | United States of America |
+| 131 James Marlow                                 | United States of America |
+| 132 TJ Olson                                     | United States of America |
+| 133 Jason Mallin                                 | United States of America |
+| 134 Michael Rogers                               | United States of America |
+| 135 Ki Gee                                       | United States of America |
+| 136 Hazel Philtanker                             | United States of America |
+| 137 Renske Ladwig                                | United States of America |
+| 138 Stephen Stiles                               | United States of America |
+| 139 John Seo                                     | United States of America |
+| 140 Joshua Patel                                 | United States of America |
+| 141 Trenna Rajs                                  | United States of America |
+| 142 Curtis Davies                                | United States of America |
+| 143 Randall Matos                                | United States of America |
+| 144 Peter Vargas                                 | United States of America |
+| 145 John Russell                                 | United Kingdom           |
+| 146 Karen Partners                               | United Kingdom           |
+| 147 Alberto Errazuriz                            | United Kingdom           |
+| 148 Gerald Cambrault                             | United Kingdom           |
+| 149 Eleni Zlotkey                                | United Kingdom           |
+| 150 Peter Tucker                                 | United Kingdom           |
+| 151 David Bernstein                              | United Kingdom           |
+| 152 Peter Hall                                   | United Kingdom           |
+| 153 Christopher Olsen                            | United Kingdom           |
+| 154 Nanette Cambrault                            | United Kingdom           |
+| 155 Oliver Tuvault                               | United Kingdom           |
+| 156 Janette King                                 | United Kingdom           |
+| 157 Patrick Sully                                | United Kingdom           |
+| 158 Allan McEwen                                 | United Kingdom           |
+| 159 Lindsey Smith                                | United Kingdom           |
+| 160 Louise Doran                                 | United Kingdom           |
+| 161 Sarath Sewall                                | United Kingdom           |
+| 162 Clara Vishney                                | United Kingdom           |
+| 163 Danielle Greene                              | United Kingdom           |
+| 164 Mattea Marvins                               | United Kingdom           |
+| 165 David Lee                                    | United Kingdom           |
+| 166 Sundar Ande                                  | United Kingdom           |
+| 167 Amit Banda                                   | United Kingdom           |
+| 168 Lisa Ozer                                    | United Kingdom           |
+| 169 Harrison Bloom                               | United Kingdom           |
+| 170 Tayler Fox                                   | United Kingdom           |
+| 171 William Smith                                | United Kingdom           |
+| 172 Elizabeth Bates                              | United Kingdom           |
+| 173 Sundita Kumar                                | United Kingdom           |
+| 174 Ellen Abel                                   | United Kingdom           |
+| 175 Alyssa Hutton                                | United Kingdom           |
+| 176 Jonathon Taylor                              | United Kingdom           |
+| 177 Jack Livingston                              | United Kingdom           |
+| 178 Kimberely Grant                              | NULL                     |
+| 179 Charles Johnson                              | United Kingdom           |
+| 180 Winston Taylor                               | United States of America |
+| 181 Jean Fleaur                                  | United States of America |
+| 182 Martha Sullivan                              | United States of America |
+| 183 Girard Geoni                                 | United States of America |
+| 184 Nandita Sarchand                             | United States of America |
+| 185 Alexis Bull                                  | United States of America |
+| 186 Julia Dellinger                              | United States of America |
+| 187 Anthony Cabrio                               | United States of America |
+| 188 Kelly Chung                                  | United States of America |
+| 189 Jennifer Dilly                               | United States of America |
+| 190 Timothy Gates                                | United States of America |
+| 191 Randall Perkins                              | United States of America |
+| 192 Sarah Bell                                   | United States of America |
+| 193 Britney Everett                              | United States of America |
+| 194 Samuel McCain                                | United States of America |
+| 195 Vance Jones                                  | United States of America |
+| 196 Alana Walsh                                  | United States of America |
+| 197 Kevin Feeney                                 | United States of America |
+| 198 Donald OConnell                              | United States of America |
+| 199 Douglas Grant                                | United States of America |
+| 200 Jennifer Whalen                              | United States of America |
+| 201 Michael Hartstein                            | Canada                   |
+| 202 Pat Fay                                      | Canada                   |
+| 203 Susan Mavris                                 | United Kingdom           |
+| 204 Hermann Baer                                 | Germany                  |
+| 205 Shelley Higgins                              | United States of America |
+| 206 William Gietz                                | United States of America |
++--------------------------------------------------+--------------------------+
+107 rows in set (0.00 sec)

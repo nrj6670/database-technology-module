@@ -1,0 +1,198 @@
+1. login to MySQL
+
+2. list different database in MySQL
+
+SOLUTION:-
+
+mysql> show databases;
+
++------------------------+
+| Database               |
++------------------------+
+| ad_java_day1           |
+| ad_java_day2           |
+| ad_java_day3           |
+| ad_java_day4           |
+| ad_java_day5           |
+| ad_java_day6           |
+| banking-system         |
+| candidate-registration |
+| day2                   |
+| day3                   |
+| day3_assignment        |
+| day4                   |
+| day6                   |
+| day8                   |
+| demo1                  |
+| hb-01-one-to-one-uni   |
+| hb-03-one-to-many      |
+| hb-04-one-to-many-uni  |
+| hb-05-many-to-many     |
+| hibernatedemo          |
+| hrschema               |
+| information_schema     |
+| lab-exam               |
+| mysql                  |
+| performance_schema     |
+| sakila                 |
+| sales                  |
+| scott_schema           |
+| sys                    |
+| web_customer_tracker   |
+| world                  |
++------------------------+
+31 rows in set (0.50 sec)
+
+
+3. How to connect to specific database
+
+SOLUTION :-  USE database_name;
+
+4. List all the tables available in given database
+
+SOLUTION :-
+
+mysql> use scott_schema;
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_scott_schema |
++------------------------+
+| bonus                  |
+| dept                   |
+| dummy                  |
+| emp                    |
+| salgrade               |
++------------------------+
+5 rows in set (0.03 sec)
+
+5. Switch from one database to other
+
+SOLUTION:-
+
+mysql> USE database1;
+Database changed
+
+mysql> USE database2;
+Database changed
+
+6. Run the script "hrschema.sql" in your database
+
+SOLUTION:-
+
+SOURCE "FULL PATH TO THE SQL SCRIPT";
+
+7. List the tables that you have in the database now
+
+SOLUTION:-
+
+mysql> use scott_schema;
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_scott_schema |
++------------------------+
+| bonus                  |
+| dept                   |
+| dummy                  |
+| emp                    |
+| salgrade               |
++------------------------+
+5 rows in set (0.03 sec)
+
+8. Describe the structure of each table in MySQL
+
+SOLUTION:-
+
+mysql> USE scott_schema;
+Database changed
+
+mysql> desc table_name
+
+mysql> DESC emp;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| EMPNO    | int unsigned | NO   |     | NULL    |       |
+| ENAME    | varchar(10)  | YES  |     | NULL    |       |
+| JOB      | varchar(9)   | YES  |     | NULL    |       |
+| MGR      | int unsigned | YES  |     | NULL    |       |
+| HIREDATE | date         | YES  |     | NULL    |       |
+| SAL      | float        | YES  |     | NULL    |       |
+| COMM     | float        | YES  |     | NULL    |       |
+| DEPTNO   | int unsigned | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+8 rows in set (0.35 sec)
+
+9. Show the data from each table in MySQL
+
+SOLUTION:-
+
+mysql> 
+
+10. Interact with MySQL WorkBench Software
+
+11. Clear the MySQL command prompt
+
+SOLUTION:-
+mysql> system cls;
+
+12. Fire command to check current user in database
+
+SOLUTION:-
+
+mysql> status;
+
+D:\mysql\bin\mysql.exe  Ver 8.0.20 for Win64 on x86_64 (MySQL Community Server - GPL)
+
+Connection id:          9
+Current database:       scott_schema
+Current user:           root@localhost
+SSL:                    Cipher in use is TLS_AES_256_GCM_SHA384
+Using delimiter:        ;
+Server version:         8.0.20 MySQL Community Server - GPL
+Protocol version:       10
+Connection:             localhost via TCP/IP
+Server characterset:    utf8mb4
+Db     characterset:    utf8mb4
+Client characterset:    cp850
+Conn.  characterset:    cp850
+TCP port:               3306
+Binary data as:         Hexadecimal
+Uptime:                 5 days 21 hours 8 min 51 sec
+
+Threads: 2  Questions: 16  Slow queries: 0  Opens: 156  Flush tables: 3  Open tables: 77  Queries per second avg: 0.000
+
+13. Fire command to see current date and time of server
+
+mysql> select now() as "Data and time";
++---------------------+
+| Data and time       |
++---------------------+
+| 2021-08-19 10:14:55 |
++---------------------+
+1 row in set (0.00 sec)
+
+16. Observe the command "select null;"
+      Identify what is null
+
+SOLUTION:-
+
+mysql> select null;
++------+
+| NULL |
++------+
+| NULL |
++------+
+1 row in set (0.00 sec)
+
+17. Create your own tables sql file and try to execute in the database.
+
+mysql> source C:/Users/nrj66/Desktop/DBT/sql_source_files/day2_assignment_script.sql
+Query OK, 0 rows affected (0.15 sec)
+
+Query OK, 1 row affected (0.13 sec)
+
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+Query OK, 0 rows affected, 1 warning (0.45 sec)

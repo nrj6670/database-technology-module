@@ -1,0 +1,69 @@
+1. Prepare a program which can perform following operation
+	- Lookout for tables which has missing constraints
+	- Display list of those tables
+	
+2. Prepare a program to delete the data from emp. It will receive two inputs employee number and employee name. If employee number is passed as null then delete the data based on employee name.
+Backup the deleted data to employee_backup table.
+
+SOLUTION:-
+
+	CREATE PROCEDURE p11(EMP_NUM INT, EMP_NAME VARCHAR(30))
+	BEGIN
+	IF EMP_NUM IS NULL THEN
+	DELETE FROM emp WHERE ENAME=EMP_NAME;
+	ELSE
+	DELETE FROM emp WHERE EMPNO=EMP_NUM;
+	END IF;
+	END//
+
+3. Prepare a program to insert new record in employee table. it will take the input of employee data.
+If salary is provided as null then consider the salary as highest salary earned by any employee in same department. If comm is not provided then assume it as 200$
+
+SOLUTION:- 
+	CREATE PROCEDURE p12(EMP_NUM INT, NAME VARCHAR(20), JOB VARCHAR(15), MGR INT, HIREDATE DATE, SALARY INT, COMM INT, DEPT_NUM INT)
+       	BEGIN
+	SET COMM = IFNULL(COMM, 200);
+	IF SALARY IS NULL THEN
+	SELECT MAX(SAL) INTO SALARY FROM emp WHERE DEPTNO=DEPT_NUM;
+	END IF;
+	INSERT INTO emp VALUES(EMP_NUM,NAME,JOB,MGR,HIREDATE,SALARY,COMM,DEPT_NUM);
+	END//
+	
+
+4. Prepare a program to receive the input as table name and column name. Add primary key constraint on provided table's column.
+
+SOLUTION:-
+
+	CREATE PROCEDURE p13(TABLE_NAME VARCHAR(20), COL_NAME VARCHAR(20))
+	BEGIN
+	ALTER TABLE_NAME ADD PRIMARY KEY(COL_NAME);
+	END//
+
+5. Prepare a program to list those employee who are earning less then avg of there deparment. This program may take input as (p_salary_fix BOOLEAN). If the input is given as true then these employees salary must be set to AVG Salary + 100$.
+
+SOLUTION:-
+
+	CREATE PROCEDURE p14(p_fix_salary BOOLEAN)
+	BEGIN
+	DECLARE AVG_SAL INT;
+	DECLARE EMP_ID INT;
+	DECLARE RECORD_COUNT INT;
+	SELECT AVG(sal) INTO AVG_SAL FROM emp;
+	IF p_fix_salary=1 THEN
+	BEGIN
+	DECLARE EMP_CUR CURSOR FOR SELECT EMPNO FROM emp WHERE SAL<AVG_SAL;
+	SELECT COUNT(EMPNO) INTO RECORD_COUNT FROM emp WHERE SAL<AVG_SAL;
+	OPEN EMP_CUR;
+	EMP_LOOP : LOOP
+	IF RECORD_COUNT = 0 THEN
+	LEAVE EMP_LOOP;
+	END IF;
+	FETCH EMP_CUR INTO EMP_ID;
+	UPDATE emp SET SAL = (AVG_SAL + 100) WHERE EMPNO=EMP_ID;
+	SET RECORD_COUNT = RECORD_COUNT - 1;
+	END LOOP EMP_LOOP;
+	CLOSE EMP_CUR;
+	END;
+	END IF;
+	END//
+		

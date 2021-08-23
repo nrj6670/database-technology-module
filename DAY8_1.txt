@@ -1,0 +1,254 @@
+
+PL/SQL Basics
+
+Practice 1:
+     
+ Evaluate each of the following declarations.
+ Determine which of them are not legal and explain why?
+
+     a.	 DECLARE    v_id INT(4);
+     b.  DECLARE    v_x , v_y,  v_z  VARCHAR(10);
+     c.  DECLARE   v_birthdate DATE;
+     d.  DECLARE   v_in_stock   BOOLEAN default 1;  
+
+SOLUTION:-
+
+	ANSWER :- ALL OF THEN ARE LEGAL
+-----------------------------------------------------------------------------------------------
+
+Practice 2: What will be the output of the following program?
+
+	BEGIN
+	DECLARE v_data INT(7);
+	
+		SELECT v_data;
+	END;
+
+
+SOLUTION : 
+	OUTPUT :- NULL;
+----------------------------------------------------------------------------------------------
+
+Practice 3:
+
+     BEGIN
+      	 DECLARE  v_weight INT (3) DEFAULT 600;
+            DECLARE v_message VARCHAR(255) DEFAULT "Product 10012";
+
+ 	BEGIN
+      		DECLARE  v_weight INT(3) DEFAULT 1;
+      		DECLARE  v_message VARCHAR (225) DEFAULT "Product 11001";
+      		DECLARE  v_new_locn VARCHAR(225) DEFAULT "Europe";
+   		
+    		SET v_weight = v_weight +1;
+  		SET v_new_locn ="Western " ||v_new_locn; 
+			--  Point 1
+
+END; 
+ SET v_weight=v_weight + 1;
+ SET v_message=v_message|| " is in stock";
+-- Point 2
+   END; 
+
+Consider the above PL/SQL code. What will be the values of the variables v_weight, v_message and v_new_locn at point 1 and point 2
+
+
+Practice 4:  
+
+Write a PL/SQL block that accepts values of two non zero integer Ints from user. The block performs the following operation 
+( first_Int/second_Int + second_Int). The result of the operation should be stored in a PL/SQL variable and also displayed on the screen.
+
+SOLUTION:-
+    mysql> DELIMITER //
+    mysql> create procedure p3(A INT, B INT)
+    -> BEGIN
+    -> DECLARE C DOUBLE(4,2);
+    -> SET C = A / B + B;
+    -> SELECT C;
+    -> END;
+    -> //
+    mysql> DELIMITER ;
+    mysql> call p3(2,4)
+
++------+
+| C    |
++------+
+| 4.50 |
++------+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Practice 5:
+
+Declare two SQL* plus variables named MAX_SALARY and MIN_SALARY that are of data type INT.
+Write a PL/SQL block that accepts deptno value from a user, selects the maximum salary and minimum salary paid in the department, from the EMP table and stores the corresponding values in MAX_SALARY and MIN_SALARY respectively. 
+Use appropriate SQL * plus command to see the modified values of MAX_SALARY and MIN_SALARY
+
+SOLUTION :-
+
+mysql> DELIMITER //
+mysql> create procedure p4(DEPT_ID INT)
+    -> BEGIN
+    -> DECLARE MAX_SALARY, MIN_SALARY INT;
+    -> SELECT MIN(salary), MAX(salary) INTO MIN_SALARY, MAX_SALARY FROM employees WHERE  department_id=DEPT_ID;
+    -> SELECT MIN_SALARY,MAX_SALARY;
+    -> END;
+    -> //
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> call p4(80) //
++------------+------------+
+| MIN_SALARY | MAX_SALARY |
++------------+------------+
+|       6100 |      14000 |
++------------+------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Practice 6: 
+
+Write a PL/SQL block that accepts employee Int from a user and retrieves the salary for the employee from the EMP table. It determines the salary class as per the following criteria and displays the salary and salary class on the screen
+Criteria for deciding salary class: 
+If the salary is less than 2500, then it comes under the class 'LOW'
+If the salary is greater than or equal to  2500 and less than 5000, then it comes under class 'MEDIUM'.
+If the salary is greater than or equal to 5000, then it comes under class 'HIGH'
+
+SOLUTION:-
+
+	CREATE PROCEDURE p5(EMP_ID INT)
+	BEGIN
+	DECLARE EMP_SALARY INT;
+	DECLARE GRADE VARCHAR(10);
+	SELECT salary INTO EMP_SALARY FROM employees WHERE  employee_id=EMP_ID;
+	SELECT EMP_SALARY;
+	IF EMP_SALARY < 2500 THEN
+	SET GRADE = "LOW";
+	ELSEIF EMP_SALARY < 5000 THEN
+	SET GRADE = "MEDIUM";
+	ELSE
+	SET GRADE = "HIGH";
+	END IF;
+	SELECT GRADE;
+	END//
+
+mysql> CALL p5(162)//
++------------+
+| EMP_SALARY |
++------------+
+|      10500 |
++------------+
+1 row in set (0.00 sec)
+
++-------+
+| GRADE |
++-------+
+| HIGH  |
++-------+
+1 row in set (0.01 sec)
+
+
+Practice 7:
+
+Write a PL/SQL block that accepts an integer value between 1 and 12 from a user and displays the name of the corresponding month. If the Int input  is not in the range +1 to +12 then the block should display the message “Invalid Month” on the screen
+
+SOLUTION
+
+	CREATE PROCEDURE p6(NUM INT)
+	BEGIN
+	DECLARE MONTH VARCHAR(20);
+	CASE NUM
+	WHEN 1 THEN SET MONTH = "JAN";
+	WHEN 2 THEN SET MONTH = "FEB";
+	WHEN 3 THEN SET MONTH = "MAR";
+	WHEN 4 THEN SET MONTH = "APR";
+	WHEN 5 THEN SET MONTH = "MAY";
+	WHEN 6 THEN SET MONTH = "JUN";
+	WHEN 7 THEN SET MONTH = "JUL";
+	WHEN 8 THEN SET MONTH = "AUG";
+	WHEN 9 THEN SET MONTH = "SEPT";
+	WHEN 10 THEN SET MONTH = "OCT";
+	WHEN 11 THEN SET MONTH = "NOV";
+	WHEN 12 THEN SET MONTH = "DEC";
+	ELSE SET MONTH = "INVALID INPUT";
+	END CASE;
+	SELECT MONTH;
+	END //
+
+mysql> CREATE PROCEDURE p6(NUM INT)
+    -> BEGIN
+    -> DECLARE MONTH VARCHAR(20);
+    -> CASE NUM
+    -> WHEN 1 THEN SET MONTH = "JAN";
+    -> WHEN 2 THEN SET MONTH = "FEB";
+    -> WHEN 3 THEN SET MONTH = "MAR";
+    -> WHEN 4 THEN SET MONTH = "APR";
+    -> WHEN 5 THEN SET MONTH = "MAY";
+    -> WHEN 6 THEN SET MONTH = "JUN";
+    -> WHEN 7 THEN SET MONTH = "JUL";
+    -> WHEN 8 THEN SET MONTH = "AUG";
+    -> WHEN 9 THEN SET MONTH = "SEPT";
+    -> WHEN 10 THEN SET MONTH = "OCT";
+    -> WHEN 11 THEN SET MONTH = "NOV";
+    -> WHEN 12 THEN SET MONTH = "DEC";
+    -> ELSE SET MONTH = "INVALID INPUT";
+    -> END CASE;
+    -> SELECT MONTH;
+    -> END //
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> CALL p6(7)//
++-------+
+| MONTH |
++-------+
+| JUL   |
++-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Practice 8:
+
+Write a PL/SQL block that accepts employee Int from a user. Declare a PL/SQL record to store the employee Int, employee name, department Int and the department name of the employee. Retrieve the values of these columns for the employee from the EMP and DEPT tables and display the employee name and the corresponding department name on the screen.
+
+SOLUTION:-
+
+	CREATE PROCEDURE p7(EMP_ID INT)
+	BEGIN
+	DECLARE E_ID, DEPT_ID INT;
+	DECLARE NAME, DEPT_NAME VARCHAR(30);
+	SELECT employee_id, CONCAT(first_name,' ',last_name), department_id INTO E_ID,NAME,DEPT_ID FROM employees WHERE employee_id=EMP_ID;
+	SELECT department_name INTO DEPT_NAME FROM departments WHERE department_id=DEPT_ID;
+	SELECT NAME, DEPT_NAME;
+	END //
+
+mysql> call p7(132)//
++----------+-----------+
+| NAME     | DEPT_NAME |
++----------+-----------+
+| TJ Olson | Shipping  |
++----------+-----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Practice 09:
+
+Write a PL/SQL block to add a department row in the DEPT table with the following values for columns
+
+The block retrieves the maximum value of deptno from the dept table and adds 1 to it to generate the value of deptno 
+Dname  value should be  'Education'
+Loc value should be NULL
+           
+
+SOLUTION:-
+
+	CREATE PROCEDURE p8()
+	BEGIN
+	DECLARE MAX_DEPT_VAL INT;
+	DECLARE NEW_DEPT_NAME VARCHAR(15);
+	SELECT MAX(DEPTNO) INTO MAX_DEPT_VAL FROM emp;
+	SET MAX_DEPT_VAL = MAX_DEPT_VAL + 1;
+	INSERT INTO dept VALUES (MAX_DEPT_VAL, "Education", NULL);
+	END//
+
+---

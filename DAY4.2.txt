@@ -1,0 +1,753 @@
+1) Display all the records in emp table?
+
+solution:-
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.02 sec)
+
+2) Display all the records in emp table where employee belongs to deptno 10?
+
+solution:-
+
+mysql> select * from emp where DEPTNO=10;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+
+
+3) Display all the records in emp table where employee does not belong to deptno 30?
+
+solution:-
+
+mysql> select * from emp where not DEPTNO=10;
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER  | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7788 | SCOTT  | ANALYST  | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK    | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST  | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+--------+----------+------+------------+------+------+--------+
+11 rows in set (0.00 sec)
+
+4) Display total number of records in Emp table?
+
+solution:-
+
+mysql> select Count(*) as 'Count of records' from emp;
++------------------+
+| Count of records |
++------------------+
+|               14 |
++------------------+
+1 row in set (0.00 sec)
+
+5) Display emp table with salary descending order?
+
+solution:-
+
+mysql> select * from emp order by SAL desc;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+6) Display all the records in emp table order by ascending deptno, descending salary?
+
+solution:-
+
+mysql> select * from emp order by DEPTNO, SAL desc;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+--------+-----------+------+------------+------+------+--------+
+14 rows in set (0.00 sec)
+
+7) Display all employees those who were joined in year 1981?
+
+solution:-
+
+mysql> select * from emp where HIREDATE>'1980-12-31' and HIREDATE<'1982-01-01';
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+--------+-----------+------+------------+------+------+--------+
+10 rows in set (0.00 sec)
+
+8) Display COMM in emp table. Display zero in place of null.
+
+solution:-
+
+mysql> select ifnull(COMM, 0) as 'Commision earned' from emp;
++------------------+
+| Commision earned |
++------------------+
+|                0 |
+|              300 |
+|              500 |
+|                0 |
+|             1400 |
+|                0 |
+|                0 |
+|                0 |
+|                0 |
+|                0 |
+|                0 |
+|                0 |
+|                0 |
+|                0 |
++------------------+
+14 rows in set (0.00 sec)
+
+9) Display the records in emp table where MGR in 7698,7566 and sal should be greater then 1500
+
+solution:-
+
+mysql> select * from emp where (MGR=7698 OR MGR=7566) and SAL>1500;
++-------+-------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7788 | SCOTT | ANALYST  | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7902 | FORD  | ANALYST  | 7566 | 1981-12-03 | 3000 | NULL |     20 |
++-------+-------+----------+------+------------+------+------+--------+
+3 rows in set (0.00 sec)
+
+10) Display all employees where employees hired before 01-JAN-1981
+
+solution:-
+
+mysql> select * from emp where HIREDATE<'1981-01-01';
++-------+-------+-------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB   | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+-------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK | 7902 | 1980-12-17 |  800 | NULL |     20 |
++-------+-------+-------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+11) Display all employees with how many years they have been servicing in the company?
+
+solution:-
+
+mysql> select ENAME, year(curdate()) - year(HIREDATE) as 'Experiance (in years)' from emp;
++--------+-----------------------+
+| ENAME  | Experiance (in years) |
++--------+-----------------------+
+| SMITH  |                    41 |
+| ALLEN  |                    40 |
+| WARD   |                    40 |
+| JONES  |                    40 |
+| MARTIN |                    40 |
+| BLAKE  |                    40 |
+| CLARK  |                    40 |
+| SCOTT  |                    39 |
+| KING   |                    40 |
+| TURNER |                    40 |
+| ADAMS  |                    38 |
+| JAMES  |                    40 |
+| FORD   |                    40 |
+| MILLER |                    39 |
++--------+-----------------------+
+14 rows in set (0.00 sec)
+
+12) Display all employees those were not joined in 1981?
+
+solution:-
+
+mysql> select ENAME from emp where year(HIREDATE)>1981;
++--------+
+| ENAME  |
++--------+
+| SCOTT  |
+| ADAMS  |
+| MILLER |
++--------+
+3 rows in set (0.00 sec)
+
+13) Display all employees where their salary is less then the Ford’s salary?
+
+SOLUTION:-
+
+mysql> select * from emp where sal<(select sal from emp where ename="FORD");
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 |  400 |  500 |     30 |
+|  7566 | JONES  | MANAGER  | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER  | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK    | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+11 rows in set (0.08 sec)
+
+14) Display all records in EMP table those were joined before SCOTT joined?
+
+mysql> SELECT * FROM emp WHERE HIREDATE<(SELECT HIREDATE FROM emp WHERE ENAME="SCOTT");
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 |  400 |  500 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+12 rows in set (0.03 sec)
+
+15) Display all employees those who were joined in third quarter of 1981?
+
+SOLUTION:-
+
+mysql> SELECT * FROM EMP WHERE YEAR(HIREDATE)=1981 AND MONTH(HIREDATE) BETWEEN 6 AND 9;
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7782 | CLARK  | MANAGER  | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+3 rows in set (0.01 sec)
+
+16) Write a query to display current date?
+
+SOLUTION:-
+
+mysql> SELECT DATE(NOW()) AS "CURRENT DATE";
++--------------+
+| CURRENT DATE |
++--------------+
+| 2021-08-19   |
++--------------+
+1 row in set (0.03 sec)
+
+17) Display distinct job from emp table?
+
+SOLUTION:-
+
+mysql> SELECT DISTINCT(JOB) FROM emp;
++-----------+
+| JOB       |
++-----------+
+| CLERK     |
+| SALESMAN  |
+| MANAGER   |
+| ANALYST   |
+| PRESIDENT |
++-----------+
+5 rows in set (0.00 sec)
+
+
+18) Display all the records in emp table where employee hired after 28-SEP-81 and before 03-DEC-81?
+
+mysql> SELECT * FROM emp WHERE HIREDATE>"1981-09-28" AND HIREDATE<"1981-12-03";
++-------+-------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+-----------+------+------------+------+------+--------+
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
++-------+-------+-----------+------+------------+------+------+--------+
+1 row in set (0.00 sec)
+
+19) Write a query that displays the employee’s names with the first letter capitalized and all other letters lowercase for all employees whose name starts with J, A, or M
+
+mysql> SELECT CONCAT(SUBSTRING(ENAME, 1, 1),LOWER(SUBSTRING(ENAME, 2))) AS "EMP_NAME" FROM emp WHERE ENAME REGEXP '^(J|A|M)';
++----------+
+| EMP_NAME |
++----------+
+| Allen    |
+| Jones    |
+| Martin   |
+| Adams    |
+| James    |
+| Miller   |
++----------+
+6 rows in set (0.00 sec)
+
+20) Display the empno, ename, sal, and salary increased by 15%.
+
+SOLUTION:-
+
+mysql> SELECT EMPNO,ENAME,SAL,round((SAL*1.15),0) AS 'NEW SAL' FROM emp;
++-------+--------+------+---------+
+| EMPNO | ENAME  | SAL  | NEW SAL |
++-------+--------+------+---------+
+|  7369 | SMITH  |  800 |     920 |
+|  7499 | ALLEN  | 1600 |    1840 |
+|  7521 | WARD   |  400 |     460 |
+|  7566 | JONES  | 2975 |    3421 |
+|  7654 | MARTIN | 1250 |    1438 |
+|  7698 | BLAKE  | 2850 |    3277 |
+|  7782 | CLARK  | 2450 |    2818 |
+|  7788 | SCOTT  | 3000 |    3450 |
+|  7839 | KING   | 5000 |    5750 |
+|  7844 | TURNER | 1500 |    1725 |
+|  7876 | ADAMS  | 1100 |    1265 |
+|  7900 | JAMES  |  950 |    1092 |
+|  7902 | FORD   | 3000 |    3450 |
+|  7934 | MILLER | 1300 |    1495 |
++-------+--------+------+---------+
+14 rows in set (0.04 sec)
+
+21) Display all employees where ename start with J and ends with S
+
+SOLUTION:-
+
+mysql> SELECT ENAME FROM emp WHERE ENAME REGEXP '^J.*S$';
+
++-------+
+| ENAME |
++-------+
+| JONES |
+| JAMES |
++-------+
+2 rows in set (0.00 sec)
+
+22) Display all employees where employee does not belong to 10,20,40
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE DEPTNO NOT IN (10,20,40);
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 |  400 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+6 rows in set (0.03 sec)
+
+23) Display all employees where jobs does not belong to PRESIDENT and MANAGER?
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE JOB NOT IN ("PRESIDENT", "MANAGER");
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 |  400 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7788 | SCOTT  | ANALYST  | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK    | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST  | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+----------+------+------------+------+------+--------+
+10 rows in set (0.00 sec)
+
+24) Display the maximum salary in the emp table
+
+mysql> SELECT MAX(SAL) AS "MAXIMUM SALARY" FROM emp;
++----------------+
+| MAXIMUM SALARY |
++----------------+
+|           5000 |
++----------------+
+1 row in set (0.02 sec)
+
+25) Display average salary for job SALESMAN
+
+SOLUTION :-
+
+mysql> SELECT AVG(SAL) AS "AVERAGE SALARY FOR SALESMAN" FROM emp WHERE JOB="SALESMAN";
++-----------------------------+
+| AVERAGE SALARY FOR SALESMAN |
++-----------------------------+
+|                      1187.5 |
++-----------------------------+
+1 row in set (0.02 sec)
+
+26) Display all three figures salary in emp table
+
+SOLUTION:-
+
+mysql> SELECT SAL AS 'ALL THREE FIGURE SALARY' FROM emp WHERE SAL<1000 AND SAL > 99;
++-------------------------+
+| ALL THREE FIGURE SALARY |
++-------------------------+
+|                     800 |
+|                     400 |
+|                     950 |
++-------------------------+
+3 rows in set (0.00 sec)
+
+27) Display all records in emp table for employee who does not receive any commission
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE COMM IS NULL OR COMM=0;
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+11 rows in set (0.00 sec)
+
+28) Display all ename where first character could be anything, but second character should be L?
+
+SOLUTION:-
+
+mysql> SELECT ENAME FROM emp WHERE ENAME REGEXP '^.+L';
++--------+
+| ENAME  |
++--------+
+| ALLEN  |
+| BLAKE  |
+| CLARK  |
+| MILLER |
++--------+
+4 rows in set (0.00 sec)
+
+29) Display sum of salary for each department.
+
+SOLUTION:-
+
+mysql> SELECT SUM(SAL) FROM emp GROUP BY DEPTNO;
++----------+
+| SUM(SAL) |
++----------+
+|    10875 |
+|     8550 |
+|     8750 |
++----------+
+3 rows in set (0.00 sec)
+
+30) Display all department with Minimum salary and maximum salary?
+
+SOLUTION:-
+
+mysql> SELECT DEPTNO, MIN(SAL) AS "MINIMUM_SALARY", MAX(SAL) AS "MAXIMUM_SAL" FROM emp GROUP BY DEPTNO;
++--------+----------------+-------------+
+| DEPTNO | MINIMUM_SALARY | MAXIMUM_SAL |
++--------+----------------+-------------+
+|     20 |            800 |        3000 |
+|     30 |            400 |        2850 |
+|     10 |           1300 |        5000 |
++--------+----------------+-------------+
+3 rows in set (0.00 sec)
+
+31) Display all the departments where department does not have any employees
+
+SOLUTION:-
+
+mysql> SELECT DEPTNO,DNAME FROM dept WHERE DEPTNO <> ALL(SELECT DISTINCT(DEPTNO) FROM emp);
++--------+------------+
+| DEPTNO | DNAME      |
++--------+------------+
+|     40 | OPERATIONS |
++--------+------------+
+1 row in set (0.00 sec)
+
+32) Display all the departments where department does have atleast one employee
+
+SOLUTION:-
+
+mysql> SELECT DEPTNO,DNAME FROM dept WHERE DEPTNO = ANY(SELECT DISTINCT(DEPTNO) FROM emp);
++--------+------------+
+| DEPTNO | DNAME      |
++--------+------------+
+|     10 | ACCOUNTING |
+|     20 | RESEARCH   |
+|     30 | SALES      |
++--------+------------+
+3 rows in set (0.00 sec)
+
+33) Display all employees those who are not managers?
+
+SOLUTION:-
+
+mysql> SELECT ENAME,JOB FROM emp WHERE JOB<>"MANAGER";
++--------+-----------+
+| ENAME  | JOB       |
++--------+-----------+
+| SMITH  | CLERK     |
+| ALLEN  | SALESMAN  |
+| WARD   | SALESMAN  |
+| MARTIN | SALESMAN  |
+| SCOTT  | ANALYST   |
+| KING   | PRESIDENT |
+| TURNER | SALESMAN  |
+| ADAMS  | CLERK     |
+| JAMES  | CLERK     |
+| FORD   | ANALYST   |
+| MILLER | CLERK     |
++--------+-----------+
+11 rows in set (0.00 sec)
+
+34) Display all the records for deptno which belongs to employee name JAMES?
+
+SOLUTION:-
+
+mysql> SELECT * FROM dept WHERE DEPTNO=ANY(SELECT DEPTNO FROM emp WHERE ENAME="JAMES");
++--------+-------+---------+
+| DEPTNO | DNAME | LOC     |
++--------+-------+---------+
+|     30 | SALES | CHICAGO |
++--------+-------+---------+
+1 row in set (0.00 sec)
+
+
+35) Display all the records in emp table where salary should be less then or equal to ADAMS salary?
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE SAL<=ANY(SELECT SAL FROM emp WHERE ENAME="ADAMS");
++-------+-------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+----------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7521 | WARD  | SALESMAN | 7698 | 1981-02-22 |  400 |  500 |     30 |
+|  7876 | ADAMS | CLERK    | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7900 | JAMES | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+-------+----------+------+------------+------+------+--------+
+4 rows in set (0.00 sec)
+
+36) Display all employees those were joined before employee WARD joined?
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE HIREDATE<ANY(SELECT HIREDATE FROM emp WHERE ENAME="WARD");
++-------+-------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+----------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
++-------+-------+----------+------+------------+------+------+--------+
+2 rows in set (0.00 sec)
+
+37) Display all subordinate those who are working under BLAKE?
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE MGR=(SELECT EMPNO FROM emp WHERE ENAME="BLAKE");
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 |  400 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+5 rows in set (0.00 sec)
+
+38) Display all subordinate(all levels) for employee BLAKE?
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE MGR=(SELECT EMPNO FROM emp WHERE ENAME="BLAKE");
++-------+--------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+----------+------+------------+------+------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 |  400 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 | 1400 |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |
++-------+--------+----------+------+------------+------+------+--------+
+5 rows in set (0.00 sec)
+
+39) Display all record in emp table for deptno which belongs to KING's Job?
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE DEPTNO=(SELECT DEPTNO FROM emp WHERE ENAME="KING");
++-------+--------+-----------+------+------------+------+------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+--------+-----------+------+------------+------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300 | NULL |     10 |
++-------+--------+-----------+------+------------+------+------+--------+
+3 rows in set (0.00 sec)
+
+40) Display the employees for empno which belongs to job PRESIDENT?
+
+SOLUTION:-
+
+mysql> SELECT EMPNO FROM emp WHERE JOB="PRESIDENT";
++-------+
+| EMPNO |
++-------+
+|  7839 |
++-------+
+1 row in set (0.00 sec)
+
+41) Display list of ename those who have joined in Year 81 as MANAGER?
+
+SOLUTION:-
+
+mysql> SELECT ENAME FROM emp WHERE YEAR(HIREDATE)=1981 AND JOB="MANAGER";
++-------+
+| ENAME |
++-------+
+| JONES |
+| BLAKE |
+| CLARK |
++-------+
+3 rows in set (0.00 sec)
+
+42) Display who is making highest commission?
+
+SOLUTION:-
+
+mysql> SELECT MAX(COMM) AS "MAXIMUM COMMISION" FROM emp;
++-------------------+
+| MAXIMUM COMMISION |
++-------------------+
+|              1400 |
++-------------------+
+1 row in set (0.00 sec)
+
+43) Display who is senior most employee? How many years has been working?
+
+SOLUTION:-
+
+mysql> SELECT ENAME, (YEAR(NOW()) - YEAR(HIREDATE)) AS "EXPERIENCE(IN YEARS)" FROM emp WHERE HIREDATE=(SELECT MIN(HIREDATE) FROM emp AS TEMP);
++-------+----------------------+
+| ENAME | EXPERIENCE(IN YEARS) |
++-------+----------------------+
+| SMITH |                   41 |
++-------+----------------------+
+1 row in set (0.00 sec)
+
+44) Display who is most experienced and least experienced employee?
+
+SOLUTION:-
+
+mysql> SELECT ENAME, (YEAR(NOW()) - YEAR(HIREDATE)) AS "EXPERIENCE(IN YEARS)" FROM emp WHERE HIREDATE=ANY(SELECT MIN(HIREDATE) FROM emp) OR HIREDATE=(SELECT MAX(HIREDATE) FROM emp);
++-------+----------------------+
+| ENAME | EXPERIENCE(IN YEARS) |
++-------+----------------------+
+| SMITH |                   41 |
+| ADAMS |                   38 |
++-------+----------------------+
+2 rows in set (0.00 sec)
+
+45) Display all employee whose location is DALLAS?
+
+SOLUTION:-
+
+mysql> SELECT * FROM emp WHERE DEPTNO=(SELECT DEPTNO FROM dept WHERE LOC="DALLAS");
++-------+-------+----------+------+------------+------+------+--------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO |
++-------+-------+----------+------+------------+------+------+--------+
+|  7369 | SMITH | CLERK    | 7902 | 1980-12-17 |  800 | NULL |     20 |
+|  7566 | JONES | MANAGER  | 7839 | 1981-04-02 | 2975 | NULL |     20 |
+|  7788 | SCOTT | ANALYST  | 7566 | 1982-12-09 | 3000 | NULL |     20 |
+|  7876 | ADAMS | CLERK    | 7788 | 1983-01-12 | 1100 | NULL |     20 |
+|  7902 | FORD  | ANALYST  | 7566 | 1981-12-03 | 3000 | NULL |     20 |
+|  1234 | JAMES | SALESMAN | 7698 | 2021-06-12 | 1645 | NULL |     20 |
++-------+-------+----------+------+------------+------+------+--------+
+6 rows in set (0.00 sec)
+
+46) List ename, job, sal and department of all employees whose salary is not within the salary grade?
+
+SOLUTION:-
+
+mysql> SELECT ENAME,JOB,SAL FROM emp WHERE SAL<ALL(SELECT LOSAL FROM salgrade) OR SAL>ALL(SELECT HISAL FROM salgrade);
++-------+----------+-------+
+| ENAME | JOB      | SAL   |
++-------+----------+-------+
+| WARD  | SALESMAN |   400 |
+| JAMES | SALESMAN | 10000 |
++-------+----------+-------+
+2 rows in set (0.00 sec)
+
+
+

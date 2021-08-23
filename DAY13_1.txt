@@ -1,0 +1,97 @@
+Q1) CREATE A TABLE WITH DUPLICATE RECORDS AND WRITE A QUERY TO REMOVE DUPLICATE RECORDS.
+
+Q2) What is Query to display Nth Record from Employee table?
+
+SOLUTION:- SELECT * FROM emp LIMIT N-1, 1;
+
+Q3) How to get 3 Highest salaries records from Employee table?
+
+SOLUTION:- SELECT SAL FROM emp ORDER BY SAL DESC LIMIT 3;
+
+Q4) What is the Query to fetch last record from the table?
+
+SOLUTION:- SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, RANK() OVER(ORDER BY EMPNO DESC) AS "ROW NUM" FROM emp LIMIT 1; 
+
+Q5) How to Display Odd rows in Employee table?
+
+SOLUTION:-
+
+SELECT * FROM (SELECT t.*, RANK() OVER(ORDER BY t.EMPNO) AS "RANK" FROM emp t) TEMP WHERE mod(TEMP.RANK, 2) = 1;
++-------+--------+-----------+------+------------+------+------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM | DEPTNO | RANK |
++-------+--------+-----------+------+------------+------+------+--------+------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800 | NULL |     20 |    1 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 |  400 |  500 |     30 |    3 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 | 1400 |     30 |    5 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450 | NULL |     10 |    7 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 | NULL |     10 |    9 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100 | NULL |     20 |   11 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000 | NULL |     20 |   13 |
++-------+--------+-----------+------+------------+------+------+--------+------+
+7 rows in set (0.00 sec)
+
+Q6) How to fetch 3rd highest salary using Rank Function?
+
+SOLUTION:-  SELECT SAL, RANK() OVER(ORDER BY SAL DESC) AS "RANK" FROM emp LIMIT 2,1;
+
+Q7) Display first 50% records from Employee table?
+
+Q8) How Can i create table with same structure with data
+of Employee table?
+
+Q9) How do i fetch only common records between 2 tables.
+
+Q10) How to get distinct records from the table without using distinct keyword.
+
+Q11) How to display following using query?
+    *
+   * *
+  * * *
+  
+Q12) How to add the email validation using only one query?
+
+Q13) How to find count of duplicate rows?
+
+Q14) Write an SQL query to find the count of the total occurrences of a particular character – ‘n’ in the FullName field.
+
+Q15) Write an SQL query to fetch only even rows from the table.
+
+SOLUTION:-
+
+SELECT TEMP.* FROM (SELECT t.*, RANK() OVER(ORDER BY EMPNO) AS "ROW_NUM" FROM emp t) TEMP WHERE mod(TEMP.ROW_NUM, 2) = 0;
++-------+--------+----------+------+------------+------+------+--------+---------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | COMM | DEPTNO | ROW_NUM |
++-------+--------+----------+------+------------+------+------+--------+---------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |  300 |     30 |       2 |
+|  7566 | JONES  | MANAGER  | 7839 | 1981-04-02 | 2975 | NULL |     20 |       4 |
+|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850 | NULL |     30 |       6 |
+|  7788 | SCOTT  | ANALYST  | 7566 | 1982-12-09 | 3000 | NULL |     20 |       8 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |    0 |     30 |      10 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 | NULL |     30 |      12 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300 | NULL |     10 |      14 |
++-------+--------+----------+------+------------+------+------+--------+---------+
+7 rows in set (0.00 sec)
+
+Q16) Write a query to display all the information for those employees whose id is any id who earn the second highest salary.
+
+SOLUTION:-
+
+SELECT * FROM emp JOIN (SELECT EMPNO FROM emp ORDER BY SAL DESC LIMIT 1,1) TEMP ON emp.EMPNO=TEMP.EMPNO;
++-------+-------+---------+------+------------+------+------+--------+-------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | COMM | DEPTNO | EMPNO |
++-------+-------+---------+------+------------+------+------+--------+-------+
+|  7788 | SCOTT | ANALYST | 7566 | 1982-12-09 | 3000 | NULL |     20 |  7788 |
++-------+-------+---------+------+------------+------+------+--------+-------+
+1 row in set (0.00 sec)
+
+Q17) Write a query to display the employee ID and name ( first name and last name ) of all employees who works in such a department where the employees are working whose name containing a letter 'T'
+
+Q18)Write a query to display the employee number, name( first name and last name ) and job title for all employees whose salary is more than any salary of those employees whose job title is PU_MAN. Exclude job title PU_MAN.
+
+Q19) Write a PL/SQL code to count the number of Sundays between the two inputted dates.
+
+Q20) Write a PL/SQL code to find whether a given string is palindrome or not.
+
+Q21) Write PL/SQL program to find the sum of digits of a number.
+
+Q22) Write a PL/SQL program using WHILE loop for calculating the average of the numbers entered by user. Stop the entry of numbers whenever the user enters the number 0.

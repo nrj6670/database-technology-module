@@ -1,0 +1,66 @@
+1. create database day3_assignment;
+   use day3_assignment;
+
+2. create table manufacturer (
+	manufacturer_code BIGINT PRIMARY KEY,
+	manufacturer_name VARCHAR(20),
+	manufacturer_details(100)
+	);
+
+3. create table model (
+	model_code BIGINT PRIMARY_KEY,
+	daily_hire_rate DOUBLE,
+	model_name VARCHAR(20),
+	manufacturer_code BIGINT,
+	FOREIGN KEY(manufacturer_code) REFERENCES manufacturer(manufacturer_code)
+	); 
+
+4. create table vehicle (
+	reg_number VARCHAR(20) PRIMARY KEY,
+	model_code BIGINT, 
+	current_mileage INT,
+	daily_hire_rate DOUBLE,
+	date_mot_due DATE,
+	engine_size INT,
+	FOREIGN KEY(model_code) REFERENCES model(model_code)
+	);
+
+5. create table vehicle_category (
+	vehicle_category_code INT PRIMARY KEY,
+	vehicle_category_description VARCHAR(100),
+	reg_number VARCHAR(20),
+	FOREIGN KEY(reg_number) REFERENCES vehicle(reg_number)
+	);
+
+6. create table customer (
+	customer_id BIGINT PRIMARY KEY,
+	customer_name VARCHAR(40),
+	customer_details VARCHAR(100),
+	gender ENUM('M', 'F', 'O'),
+	email_address VARCHAR(40),
+	phone_number VARCHAR(13),
+	address_line_1 VARCHAR(20),
+	address_line_2 VARCHAR(20),
+	address_line_3 VARCHAR(20),
+	town CHAR(10),
+	county CHAR(10),
+	country CHAR(15)
+	);
+
+7. create table booking_status (
+	booking_status_code ENUM("SUCCESS", "FAILED", "PENDING", "CANCELLED") PRIMARY KEY,
+	booking_status_description VARCHAR(50)
+	); 
+
+8. create table booking (
+	booking_id INT PRIMARY KEY,
+	customer_id BIGINT,
+	vehicle_reg_number VARCHAR(20),
+	date_from DATE,
+	date_to DATE,
+	confirmation_letter_sent_yn BOOLEAN,
+	booking_status ENUM("SUCCESS", "FAILED", "PENDING", "CANCELLED"),
+	FOREIGN KEY(vehicle_reg_number) REFERENCES vehicle(reg_number),
+	FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+	FOREIGN KEY(booking_status) REFERENCES booking_status(booking_status_code)
+	);

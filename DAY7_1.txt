@@ -1,0 +1,250 @@
+1.The HR department needs a report of all employees. Write a query to display the last name, department number, and department name for all the employees.
+
+solution:-
+
+mysql> SELECT employees.last_name,employees.department_id,departments.department_name FROM employees LEFT JOIN departments ON employees.deparTment_id=departments.department_id;
++-------------+---------------+------------------+
+| last_name   | department_id | department_name  |
++-------------+---------------+------------------+
+| King        |            90 | Executive        |
+| Kochhar     |            90 | Executive        |
+| De Haan     |            90 | Executive        |
+| Hunold      |            60 | IT               |
+| Ernst       |            60 | IT               |
+| Austin      |            60 | IT               |
+| Pataballa   |            60 | IT               |
+| Lorentz     |            60 | IT               |
+| Greenberg   |           100 | Finance          |
+| Faviet      |           100 | Finance          |
+......
+...
+
+2. The HR department needs a report of employees in Toronto. Display the last name, job, department number, and the department name for all employees who work in Toronto.
+
+solution:-
+
+mysql> SELECT employees.last_name,jobs.job_title,employees.department_id,departments.department_name FROM employees 
+	LEFT JOIN departments ON employees.department_id=departments.department_id 
+	LEFT JOIN jobs ON employees.job_id=jobs.job_id
+	WHERE departments.location_id=(SELECT location_id FROM locations WHERE city='Toronto');
+
++-----------+--------------------------+---------------+-----------------+
+| last_name | job_title                | department_id | department_name |
++-----------+--------------------------+---------------+-----------------+
+| Hartstein | Marketing Manager        |            20 | Marketing       |
+| Fay       | Marketing Representative |            20 | Marketing       |
++-----------+--------------------------+---------------+-----------------+
+2 rows in set (0.00 sec)
+
+3. Create a report to display employeesí last name and employee number along with their managerís last name and manager number. Label the columns Employee, Emp#, Manager, and Mgr#, respectively. 
+
+solution:-
+mysql> SELECT employees.last_name AS Employee, employees.employee_id AS 'EMP#',emp_details_view.last_name AS Manager,emp_details_view.employee_id FROM employees
+    -> LEFT JOIN emp_details_view ON employees.manager_id=emp_details_view.employee_id;
++-------------+------+-----------+-------------+
+| Employee    | EMP# | Manager   | employee_id |
++-------------+------+-----------+-------------+
+| King        |  100 | NULL      |        NULL |
+| Kochhar     |  101 | King      |         100 |
+| De Haan     |  102 | King      |         100 |
+| Hunold      |  103 | De Haan   |         102 |
+| Ernst       |  104 | Hunold    |         103 |
+| Austin      |  105 | Hunold    |         103 |
+| Pataballa   |  106 | Hunold    |         103 |
+| Lorentz     |  107 | Hunold    |         103 |
+
+4. WAQ to display all employees including King, who has no manager. Order the results by the employee number. 
+
+solution:-
+
+mysql> SELECT * FROM employees WHERE manager_id IS NULL ORDER BY employee_id;
++-------------+------------+-----------+-------+--------------+------------+---------+----------+----------------+------------+---------------+
+| employee_id | first_name | last_name | email | phone_number | hire_date  | job_id  | salary   | commission_pct | manager_id | department_id |
++-------------+------------+-----------+-------+--------------+------------+---------+----------+----------------+------------+---------------+
+|         100 | Steven     | King      | SKING | 515.123.4567 | 1987-06-17 | AD_PRES | 24000.00 |           NULL |       NULL |            90 |
++-------------+------------+-----------+-------+--------------+------------+---------+----------+----------------+------------+---------------+
+1 row in set (0.10 sec)
+
+5. Create a report for the HR department that displays employee last names, department numbers, and all the employees who work in the same department as a given employee. Give each column an appropriate label. 
+
+solution:-
+
+mysql> SELECT last_name AS Employee,department_id AS 'DEPT#' FROM employees WHERE department_id=ANY(SELECT department_id FROM employees WHERE first_name='John' AND last_name='Chen');
++-----------+-------+
+| Employee  | DEPT# |
++-----------+-------+
+| Greenberg |   100 |
+| Faviet    |   100 |
+| Chen      |   100 |
+| Sciarra   |   100 |
+| Urman     |   100 |
+| Popp      |   100 |
++-----------+-------+
+6 rows in set (0.00 sec)
+
+6. The HR department needs a report on job grades and salaries. To familiarize yourself with the JOB_GRADES table, first show the structure of the JOB_GRADES table. Then create a query that displays the name, job, department name, salary, and grade for all employees.
+
+
+
+7. WAQ to determine the names of all the employees who were hired after Davies. Create a query to display the name and hire date of any employee hired after employee Davies.
+solution:-
+
+mysql> SELECT CONCAT(first_name,' ',last_name) AS 'Employees hired after Davies' FROM employees WHERE hire_date>ANY(SELECT hire_date FROM employees WHERE first_name='Davies' OR last_name='Davies');
++------------------------------+
+| Employees hired after Davies |
++------------------------------+
+| David Austin                 |
+| Valli Pataballa              |
+| Diana Lorentz                |
+| John Chen                    |
+| Ismael Sciarra               |
+| Jose Manuel Urman            |
+| Luis Popp                    |
+| Shelli Baida                 |
+| Sigal Tobias                 |
+.......
+...
+
+8. Write a query to display the last name and hire date of  any employee in the same department as Zlotkey. Exclude Zlotkey.
+
+solution:-
+
+mysql> SELECT last_name,hire_date FROM employees WHERE department_id=ANY(SELECT department_id FROM employees WHERE first_name='Zlotkey' OR last_name='Zlotkey') AND (first_name<>'Zlotkey' AND last_name<>'Zlotkey');
++------------+------------+
+| last_name  | hire_date  |
++------------+------------+
+| Russell    | 1996-10-01 |
+| Partners   | 1997-01-05 |
+| Errazuriz  | 1997-03-10 |
+| Cambrault  | 1999-10-15 |
+| Tucker     | 1997-01-30 |
+| Bernstein  | 1997-03-24 |
+| Hall       | 1997-08-20 |
+| Olsen      | 1998-03-30 |
+| Cambrault  | 1998-12-09 |
+| Tuvault    | 1999-11-23 |
+| King       | 1996-01-30 |
+......
+...
+
+9. Create a query to display the employee numbers and last names of all employees who earn more than the average salary. Sort the results in ascending order of salary.
+
+solution:-
+
+mysql> SELECT employee_id AS 'EMP#',last_name AS 'Last name' FROM employees WHERE salary>(SELECT AVG(salary) FROM employees);
++------+------------+
+| EMP# | Last name  |
++------+------------+
+|  100 | King       |
+|  101 | Kochhar    |
+|  102 | De Haan    |
+|  103 | Hunold     |
+|  108 | Greenberg  |
+|  109 | Faviet     |
+|  110 | Chen       |
+|  111 | Sciarra    |
+|  112 | Urman      |
+.......
+....
+..
+
+10. Write a query that displays the employee numbers and last names of all employees who work in a department with any employee whose last name contains a 'u'. 
+
+solution:-
+
+mysql> SELECT employee_id AS 'EMP#',last_name AS 'Last name' FROM employees WHERE department_id=ANY(SELECT department_id FROM employees WHERE last_name LIKE '%U%');
++------+-------------+
+| EMP# | Last name   |
++------+-------------+
+|  103 | Hunold      |
+|  104 | Ernst       |
+|  105 | Austin      |
+|  106 | Pataballa   |
+|  107 | Lorentz     |
+|  108 | Greenberg   |
+|  109 | Faviet      |
+........
+.....
+...
+
+11. Display the last name, department number, and job ID of all employees whose 	department location ID is 1700.
+
+solution:-
+
+mysql> SELECT last_name,department_id,job_id FROM employees WHERE department_id=ANY(SELECT department_id FROM departments WHERE location_id=1700);
++------------+---------------+------------+
+| last_name  | department_id | job_id     |
++------------+---------------+------------+
+| Whalen     |            10 | AD_ASST    |
+| Raphaely   |            30 | PU_MAN     |
+| Khoo       |            30 | PU_CLERK   |
+| Baida      |            30 | PU_CLERK   |
+| Tobias     |            30 | PU_CLERK   |
+| Himuro     |            30 | PU_CLERK   |
+| Colmenares |            30 | PU_CLERK   |
+| King       |            90 | AD_PRES    |
+| Kochhar    |            90 | AD_VP      |
+| De Haan    |            90 | AD_VP      |
+| Greenberg  |           100 | FI_MGR     |
+| Faviet     |           100 | FI_ACCOUNT |
+| Chen       |           100 | FI_ACCOUNT |
+| Sciarra    |           100 | FI_ACCOUNT |
+| Urman      |           100 | FI_ACCOUNT |
+| Popp       |           100 | FI_ACCOUNT |
+| Higgins    |           110 | AC_MGR     |
+| Gietz      |           110 | AC_ACCOUNT |
++------------+---------------+------------+
+18 rows in set (0.00 sec)
+
+
+12. Display the last name and salary of every employee who reports to King.
+
+solution:-
+
+mysql> SELECT ENAME,SAL AS SALARY FROM emp WHERE MGR=(SELECT EMPNO FROM emp WHERE ENAME='KING');
++-------+--------+
+| ENAME | SALARY |
++-------+--------+
+| JONES |   2975 |
+| BLAKE |   2850 |
+| CLARK |   2450 |
++-------+--------+
+3 rows in set (0.00 sec)
+        
+13. Display the department number, last name, and job ID for every employee in the Executive department.
+
+solution:-
+
+mysql> SELECT department_id,last_name,job_id FROM employees WHERE job_id=ANY(SELECT job_id FROM jobs WHERE job_title LIKE '%Representative');
++---------------+------------+--------+
+| department_id | last_name  | job_id |
++---------------+------------+--------+
+|            40 | Mavris     | HR_REP |
+|            20 | Fay        | MK_REP |
+|            70 | Baer       | PR_REP |
+|            80 | Tucker     | SA_REP |
+|            80 | Bernstein  | SA_REP |
+|            80 | Hall       | SA_REP |
+|            80 | Olsen      | SA_REP |
+|            80 | Cambrault  | SA_REP |
+|            80 | Tuvault    | SA_REP |
+........
+....
+..
+        
+14. WAQ  to display the employee numbers, last names, and salaries of all employees who earn more than the average salary and who work in a department with any employee with a u in their name. 
+
+solution:-
+
+mysql> SELECT employee_id,last_name,salary FROM employees WHERE salary>(SELECT AVG(salary) FROM employees) AND department_id=ANY(SELECT department_id FROM employees WHERE first_name LIKE '%U' OR last_name LIKE '%U%');
++-------------+------------+----------+
+| employee_id | last_name  | salary   |
++-------------+------------+----------+
+|         103 | Hunold     |  9000.00 |
+|         108 | Greenberg  | 12000.00 |
+|         109 | Faviet     |  9000.00 |
+|         110 | Chen       |  8200.00 |
+.......
+.....
++-------------+------------+----------+
+42 rows in set (0.00 sec)
